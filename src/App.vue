@@ -1,17 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-card-group deck>
+    <OpportunityForm v-for="(opportunity, index) in opportunities"
+                     :opportunity="opportunity"
+                     :index="index"
+                     :key="opportunity.id"
+                     v-on:deleteOpportunity="deleteOpportunity(index)"
+    ></OpportunityForm>
+    </b-card-group>
+    <b-button @click="addOpportunity">Add Another Opportunity</b-button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import OpportunityForm from './components/OpportunityForm.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    OpportunityForm
+  },
+  data() {
+    return {
+      opportunities: [
+        {id: 1}
+      ],
+      idCount: 1
+    }
+  },
+  methods: {
+    addOpportunity() {
+      this.idCount++;
+      this.opportunities.push({id: this.idCount})
+    },
+    deleteOpportunity: function(index) {
+      if (this.opportunities.length > 1) {
+        this.opportunities.splice(index, 1);
+      } else {
+        alert("Must have at least one opportunity")
+      }
+    }
   }
 }
 </script>
