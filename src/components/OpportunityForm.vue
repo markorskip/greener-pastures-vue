@@ -5,27 +5,28 @@
         <input-form
                 :user-data.sync="userData"
                 ></input-form>
-        <calculate-tax
-                :annual="this.annual"
-                :salary="this.userData.salary"
-                :totalTax.sync="totalTax"></calculate-tax>
-        <calculate-c-o-l
-                v-bind:state="this.userData.state"
-                v-bind:after-tax-income="afterTaxIncome"
-                :totalCol.sync="totalCol" >
-        </calculate-c-o-l>
-        <display
-                :salary="this.userData.salary"
-                :total-tax="this.totalTax"
-                :total-col="this.totalCol" ></display>
-        <div>
-        <b-button variant="primary"
+        <div v-show="this.calculateClicked">
+            <calculate-tax
+                    :annual="this.annual"
+                    :salary="this.userData.salary"
+                    :totalTax.sync="totalTax"></calculate-tax>
+            <calculate-c-o-l
+                    v-bind:state="this.userData.state"
+                    v-bind:after-tax-income="afterTaxIncome"
+                    :totalCol.sync="totalCol" >
+            </calculate-c-o-l>
+            <display
+                    :salary="this.userData.salary"
+                    :total-tax="this.totalTax"
+                    :total-col="this.totalCol" ></display>
+        </div>
+
+        <b-button block variant="primary"
                   v-on:click="calculateTax">Calculate
         </b-button>
-        <b-button variant="danger"
+        <b-button block variant="danger"
                   v-on:click="deleteOpportunity">Delete
         </b-button>
-        </div>
     </b-card>
 </template>
 
@@ -55,7 +56,8 @@
                 totalTax: 0,
                 totalCol: 0,
                 col: 0,
-                taxData: null
+                taxData: null,
+                calculateClicked: false
             }
         },
         computed: {
@@ -72,7 +74,10 @@
                 this.calculateTax();
             },
             calculateTax() {
+                if (this.userData.state == null) { alert("Enter State"); return null; }
+                if (this.userData.salary == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
+                this.calculateClicked = true;
                 axios({
                     method: 'post',
                     headers: {

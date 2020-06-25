@@ -2,12 +2,17 @@
     <div class="CalculateCOL">
         <br/>
         A dollar in {{ state }} is worth {{ this.multiplier }}<br/><br/>
-        Your after tax pay is worth: <b> {{ this.afterTaxWorth }}</b>
+        Your after tax pay is worth: <br/>
+        <h1><b> {{ this.afterTaxWorth }}</b></h1>
         <br/>
     </div>
 </template>
 
 <script>
+
+
+    // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
+    import {thousandsSeparators} from "currency-thousand-separator";
 
     let colMapping = {
         "AL":"1.1",
@@ -75,7 +80,7 @@
             afterTaxWorth: function() {
                 const afterTax = (this.afterTaxIncome * this.multiplier).toFixed(2);
                 if (isNaN(afterTax))  return null;
-                else return "$" + afterTax;
+                else return "$" + thousandsSeparators(afterTax);
             }
         }
     };

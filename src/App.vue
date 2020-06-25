@@ -19,6 +19,7 @@
 <script>
 import OpportunityForm from './components/OpportunityForm.vue'
 
+
 export default {
   name: 'App',
   components: {

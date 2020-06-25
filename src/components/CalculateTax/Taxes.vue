@@ -2,20 +2,27 @@
     <div class="CalculateTax">
         <br/>
         <div id="taxes">
-            FedTax: {{ annual.federal.amount }} <br/>
-            StateTax: {{ annual.state.amount }} <br/>
-            FicaTax: {{ annual.fica.amount }} <br/>
+            Federal Tax: ${{ fedTax }} <br/>
+            <span v-if="annual.state.amount > 0">State Tax: ${{ stateTax }} <br/></span>
+            Fica Tax: ${{ ficaTax }} <br/>
         </div>
 <!--            Taxes as percentage of income: {{ taxPercentage }} <br/>-->
-            After Tax Pay is: {{ afterTaxPay }}
+        <i>After Tax Pay is {{ afterTaxPay }} dollars.</i>
     </div>
 </template>
 
 <script>
+    import {thousandsSeparators} from "currency-thousand-separator";
+
     export default {
         props: {
             annual: Object,
             salary: Number,
+        },
+        data() {
+            return {
+                showStateTax: false
+            }
         },
         computed: {
             totalTax() {
@@ -26,15 +33,19 @@
             taxPercentage() {
                 return this.totalTax / this.salary;
             },
+            fedTax() {
+                return thousandsSeparators(this.annual.federal.amount);
+            },
+            stateTax() {
+                    return thousandsSeparators(this.annual.state.amount);
+            },
+            ficaTax() {
+                return thousandsSeparators(this.annual.fica.amount);
+            },
             afterTaxPay() {
-                return this.salary - this.totalTax;
+                return thousandsSeparators((this.salary - this.totalTax));
             }
         }
     };
 </script>
 
-<style>
-    #taxes {
-        color: #c82333;
-    }
-</style>
