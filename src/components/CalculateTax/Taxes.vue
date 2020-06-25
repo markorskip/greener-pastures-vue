@@ -17,7 +17,7 @@
     export default {
         props: {
             annual: Object,
-            salary: Number,
+            salary: Object,
         },
         data() {
             return {

@@ -7,9 +7,9 @@
                 ></input-form>
         <div v-show="this.calculateClicked">
             <calculate-tax
-                    :annual="this.annual"
-                    :salary="this.userData.salary"
-                    :totalTax.sync="totalTax"></calculate-tax>
+                    v-bind:annual="this.annual"
+                    v-bind:salary="this.userData.salary"
+                    v-bind:totalTax.sync="totalTax"></calculate-tax>
             <calculate-c-o-l
                     v-bind:state="this.userData.state"
                     v-bind:after-tax-income="afterTaxIncome"

@@ -1,7 +1,7 @@
 <template>
     <div class="CalculateCOL">
         <br/>
-        A dollar in {{ state }} is worth {{ this.multiplier }}<br/><br/>
+        <a href="https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/">A dollar in {{ state }} is worth {{ this.multiplier }}</a><br/><br/>
         Your after tax pay is worth: <br/>
         <h1><b> {{ this.afterTaxWorth }}</b></h1>
         <br/>

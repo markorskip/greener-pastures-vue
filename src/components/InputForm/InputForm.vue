@@ -59,7 +59,7 @@
             <b-form-radio v-model="userData.filing_status" value="married">Married</b-form-radio>
             <b-form-radio v-model="userData.filing_status" value="head_of_household">Head Of Household</b-form-radio>
         </b-form-group>
-            <label for="salary">Salary</label>
+            <label for="salary">Salary:</label>
             <input id="salary" v-model="userData.salary"><br/>
     </b-form>
 </template>
