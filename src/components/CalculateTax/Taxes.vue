@@ -16,9 +16,9 @@
         },
         computed: {
             totalTax() {
-                let totalTax = this.annual.fica.amount + this.annual.federal.amount + this.annual.state.amount;
-                this.$emit('totalTax',totalTax);
-                return totalTax;
+                let totalTaxCalc = this.annual.fica.amount + this.annual.federal.amount + this.annual.state.amount;
+                this.$emit('update:totalTax',totalTaxCalc);
+                return totalTaxCalc;
             },
             taxPercentage() {
                 return this.totalTax / this.salary;

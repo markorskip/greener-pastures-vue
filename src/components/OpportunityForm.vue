@@ -3,9 +3,9 @@
             sub-title="Enter Data Below"
             style="max-width: 20rem">
         <input-form @emitUserData="update($event)" :user-data="this.userData"></input-form>
-        <calculate-tax :annual="this.annual" :salary="this.userData.salary" @totalTax="totalTax = $event"></calculate-tax>
+        <calculate-tax :annual="this.annual" :salary="this.userData.salary" :totalTax.sync="totalTax"></calculate-tax>
         <calculate-c-o-l :total-col="totalCol" @totalCol="totalCol = $event" ></calculate-c-o-l>
-        <display :salary="this.salary" :total-tax="this.totalTax" :total-col="this.totalCol" ></display>
+        <display :salary="this.userData.salary" :total-tax="this.totalTax" :total-col="this.totalCol" ></display>
         <b-button v-on:click="deleteOpportunity">Delete Opportunity</b-button>
     </b-card>
 </template>

@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <b-card-group deck>
-    <OpportunityForm v-for="(opportunity, index) in opportunities"
-                     :opportunity="opportunity"
-                     :index="index"
-                     :key="opportunity.id"
-                     v-on:deleteOpportunity="deleteOpportunity(index)"
-    ></OpportunityForm>
+      <OpportunityForm v-for="(opportunity, index) in this.opportunities"
+                       v-bind:opportunity="opportunity"
+                       v-bind:index="index"
+                       v-bind:key="opportunity.id"
+                       v-on:deleteOpportunity="deleteOpportunity(index)"
+      ></OpportunityForm>
     </b-card-group>
     <b-button @click="addOpportunity">Add Another Opportunity</b-button>
   </div>
@@ -33,7 +33,7 @@ export default {
       this.idCount++;
       this.opportunities.push({id: this.idCount})
     },
-    deleteOpportunity: function(index) {
+    deleteOpportunity(index) {
       if (this.opportunities.length > 1) {
         this.opportunities.splice(index, 1);
       } else {
