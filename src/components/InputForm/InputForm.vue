@@ -62,7 +62,7 @@
         </b-form-group>
             <label for="salary">Salary</label>
             <input id="salary" v-model="userData.salary"><br/>
-            <b-button v-on:click="emitUserData">Calculate Tax</b-button>
+            <b-button variant="outline-primary" v-on:click="emitUserData">Calculate Tax</b-button>
 
     </b-form>
 </template>

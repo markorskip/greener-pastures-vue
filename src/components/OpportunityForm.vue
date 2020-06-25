@@ -6,7 +6,7 @@
         <calculate-tax :annual="this.annual" :salary="this.userData.salary" :totalTax.sync="totalTax"></calculate-tax>
         <calculate-c-o-l :total-col="totalCol" @totalCol="totalCol = $event" ></calculate-c-o-l>
         <display :salary="this.userData.salary" :total-tax="this.totalTax" :total-col="this.totalCol" ></display>
-        <b-button v-on:click="deleteOpportunity">Delete Opportunity</b-button>
+        <b-button variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
     </b-card>
 </template>
 
@@ -81,5 +81,6 @@
 </script>
 
 <style>
+
 
 </style>
