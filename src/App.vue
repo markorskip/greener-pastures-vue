@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="title">
-      <h1>Best Opportunity Calculater</h1>
+      <h1>Best Opportunity Calculator</h1>
       <h5>Enter your current and potential opportunities for comparison</h5><br/>
-     <b-button variant="success" @click="addOpportunity">Add Another Opportunity</b-button><br/><br/>
+     <b-button variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
     </div>
     <b-card-group deck>
       <OpportunityForm v-for="(opportunity, index) in this.opportunities"

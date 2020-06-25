@@ -1,6 +1,5 @@
 <template>
     <b-form>
-
             <label for="state">State: </label>
             <select id="state" v-model="userData.state">
                 <option value="AL">Alabama</option>
@@ -62,8 +61,6 @@
         </b-form-group>
             <label for="salary">Salary</label>
             <input id="salary" v-model="userData.salary"><br/>
-            <b-button variant="outline-primary" v-on:click="emitUserData">Calculate Tax</b-button>
-
     </b-form>
 </template>
 

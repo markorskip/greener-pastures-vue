@@ -1,12 +1,31 @@
 <template>
-    <b-card title="Opportunity"
-            sub-title="Enter Data Below"
+    <b-card
+            sub-title="Enter opportunity data below"
             style="max-width: 20rem">
-        <input-form @emitUserData="update($event)" :user-data="this.userData"></input-form>
-        <calculate-tax :annual="this.annual" :salary="this.userData.salary" :totalTax.sync="totalTax"></calculate-tax>
-        <calculate-c-o-l :total-col="totalCol" @totalCol="totalCol = $event" ></calculate-c-o-l>
-        <display :salary="this.userData.salary" :total-tax="this.totalTax" :total-col="this.totalCol" ></display>
-        <b-button variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
+        <input-form
+                :user-data.sync="userData"
+                ></input-form>
+        <calculate-tax
+                :annual="this.annual"
+                :salary="this.userData.salary"
+                :totalTax.sync="totalTax"></calculate-tax>
+        <calculate-c-o-l
+                v-bind:state="this.userData.state"
+                v-bind:after-tax-income="afterTaxIncome"
+                :totalCol.sync="totalCol" >
+        </calculate-c-o-l>
+        <display
+                :salary="this.userData.salary"
+                :total-tax="this.totalTax"
+                :total-col="this.totalCol" ></display>
+        <div>
+        <b-button variant="primary"
+                  v-on:click="calculateTax">Calculate
+        </b-button>
+        <b-button variant="danger"
+                  v-on:click="deleteOpportunity">Delete
+        </b-button>
+        </div>
     </b-card>
 </template>
 
@@ -24,9 +43,9 @@
         data: function () {
             return {
                 userData: {
-                    state: "KY",
-                    salary: 125000,
-                    filing_status: "married",
+                    state: null,
+                    salary: null,
+                    filing_status: "single",
                 },
                 annual: {
                     federal: {amount: null},
@@ -42,6 +61,9 @@
         computed: {
             totalColCalculation() {
                 return this.col;
+            },
+            afterTaxIncome() {
+                return this.userData.salary - this.totalTax;
             }
         },
         methods: {
@@ -79,8 +101,3 @@
         }
     }
 </script>
-
-<style>
-
-
-</style>
