@@ -1,7 +1,5 @@
 <template>
-    <b-card
-            sub-title="Enter opportunity data below"
-            style="max-width: 20rem">
+    <b-card :header="title" style="max-width: 20rem">
 
         <div v-if="this.calculateClicked">
             <display-inputs :user-data="userData"></display-inputs>
@@ -38,8 +36,9 @@
         data: function () {
             return {
                 userData: {
+                    jobName: null,
                     state: "AL",
-                    salary: "0",
+                    salary: null,
                     filing_status: "single",
                 },
                 annual: {
@@ -51,7 +50,8 @@
                 totalCol: 0,
                 col: 0,
                 taxData: 0,
-                calculateClicked: false
+                calculateClicked: false,
+                title: 'Enter Opportunity Data Below'
             }
         },
         computed: {
@@ -65,6 +65,7 @@
                 if (this.userData.salary == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
                 this.calculateClicked = true;
+                this.title = this.userData.jobName;
                 axios({
                     method: 'post',
                     headers: {
@@ -92,6 +93,7 @@
                 this.userData.salary = null;
                 this.userData.state = "AL";
                 this.calculateClicked = false;
+                this.title = "Enter Opportunity Data Below";
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="CalculateCOL">
-        <br/>
-        <a href="https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/">A dollar in {{ state }} is worth {{ this.multiplier }}</a><br/><br/>
+        <br/><h5>Cost of Living</h5>
+        <b-link href="https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/">A dollar in {{ state }} is worth {{ this.multiplier }}</b-link>
         Your after tax pay is worth: <br/>
         <h1><b> {{ this.afterTaxWorth }}</b></h1>
         <br/>
@@ -64,8 +64,8 @@
         "WA":"0.95",
         "WV":"1.14",
         "WI":"1.08",
-        "WY":"1.03"
-
+        "WY":"1.03",
+        "DC":"0.84"
     };
 
     export default {

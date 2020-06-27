@@ -1,66 +1,10 @@
 <template>
     <b-form>
-            <label for="state">State: </label>
-            <select id="state" v-model="userData.state">
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-            </select>
-        <b-form-group label="Taxpayer Information">
-            <b-form-radio v-model="userData.filing_status" value="single">Single</b-form-radio>
-            <b-form-radio v-model="userData.filing_status" value="married">Married</b-form-radio>
-            <b-form-radio v-model="userData.filing_status" value="head_of_household">Head Of Household</b-form-radio>
-        </b-form-group>
-            <label for="salary">Salary:</label>
-            <input id="salary" v-model="userData.salary"><br/>
+        <b-form-input v-model="userData.jobName" placeholder="Enter job name (optional)"></b-form-input>
+        <b-form-select v-model="userData.state"  :options="options"></b-form-select>
+        <b-form-radio-group label="Taxpayer Information" v-model="userData.filing_status" :options="filingStatuses">
+        </b-form-radio-group>
+        <b-form-input v-model="userData.salary" placeholder="Salary"></b-form-input>
     </b-form>
 </template>
 
@@ -68,6 +12,68 @@
     export default {
         props: {
             userData: Object
+        },
+        data() {
+            return {
+                options: [
+                    { value: 'AL', text: 'Alabama' },
+                    { value: 'AK', text: 'Alaska' },
+                    { value: 'AZ', text: 'Arizona' },
+                    { value: 'AR', text: 'Arkansas' },
+                    { value: 'CA', text: 'California' },
+                    { value: 'CO', text: 'Colorado' },
+                    { value: 'CT', text: 'Connecticut' },
+                    { value: 'DC', text: 'Washington DC'},
+                    { value: 'DE', text: 'Delaware' },
+                    { value: 'FL', text: 'Florida' },
+                    { value: 'GA', text: 'Georgia' },
+                    { value: 'HI', text: 'Hawaii' },
+                    { value: 'ID', text: 'Idaho' },
+                    { value: 'IL', text: 'Illinois' },
+                    { value: 'IN', text: 'Indiana' },
+                    { value: 'IA', text: 'Iowa' },
+                    { value: 'KS', text: 'Kansas' },
+                    { value: 'KY', text: 'Kentucky' },
+                    { value: 'LA', text: 'Louisiana' },
+                    { value: 'ME', text: 'Maine' },
+                    { value: 'MD', text: 'Maryland' },
+                    { value: 'MA', text: 'Massachusetts' },
+                    { value: 'MI', text: 'Michigan' },
+                    { value: 'MN', text: 'Minnesota' },
+                    { value: 'MS', text: 'Mississippi' },
+                    { value: 'MO', text: 'Missouri' },
+                    { value: 'MT', text: 'Montana' },
+                    { value: 'NE', text: 'Nebraska' },
+                    { value: 'NV', text: 'Nevada' },
+                    { value: 'NH', text: 'New Hampshire' },
+                    { value: 'NJ', text: 'New Jersey' },
+                    { value: 'NM', text: 'New Mexico' },
+                    { value: 'NY', text: 'New York' },
+                    { value: 'NC', text: 'North Carolina' },
+                    { value: 'ND', text: 'North Dakota' },
+                    { value: 'OH', text: 'Ohio' },
+                    { value: 'OK', text: 'Oklahoma' },
+                    { value: 'OR', text: 'Oregon' },
+                    { value: 'PA', text: 'Pennsylvania' },
+                    { value: 'RI', text: 'Rhode Island' },
+                    { value: 'SC', text: 'South Carolina' },
+                    { value: 'SD', text: 'South Dakota' },
+                    { value: 'TN', text: 'Tennessee' },
+                    { value: 'TX', text: 'Texas' },
+                    { value: 'UT', text: 'Utah' },
+                    { value: 'VT', text: 'Vermont' },
+                    { value: 'VA', text: 'Virginia' },
+                    { value: 'WA', text: 'Washington' },
+                    { value: 'WV', text: 'West Virginia' },
+                    { value: 'WI', text: 'Wisconsin' },
+                    { value: 'WY', text: 'Wyoming' }
+                ],
+                filingStatuses: [
+                    { text: 'Single', value: 'single'},
+                    { text: 'Married', value: 'married'},
+                    { text: 'Head of Household', value: 'head_of_household'}
+                ]
+            }
         }
     };
 </script>

@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <b-container>
-      <div>
-        <b-button block v-b-toggle.collapse-1 variant="primary">Greener Pastures - Find Your Best Opportunity!</b-button>
+      <b-row>
+        <b-col>
+        <b-button block v-b-toggle.collapse-1 variant="primary">
+          <b-icon-chevron-bar-expand></b-icon-chevron-bar-expand>
+          Greener Pastures - Find Your Best Opportunity!
+
+        </b-button>
         <b-collapse id="collapse-1" class="mt-2">
           <b-card>
             <p class="card-text">
@@ -19,11 +24,13 @@
             </p>
           </b-card>
         </b-collapse>
-      </div>
-
-      <div id="title">
-       <b-button block variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
-      </div>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-button block variant="success" @click="addOpportunity"><b-icon-plus></b-icon-plus>Add Another Opportunity</b-button><br/><br/>
+        </b-col>
+      </b-row>
 
       <b-card-group deck>
         <OpportunityForm v-for="(opportunity, index) in this.opportunities"
@@ -33,6 +40,7 @@
                          v-on:deleteOpportunity="deleteOpportunity(index)"
         ></OpportunityForm>
       </b-card-group><br/>
+
     </b-container>
   </div>
 </template>
