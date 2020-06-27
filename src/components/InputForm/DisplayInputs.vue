@@ -2,7 +2,7 @@
     <div>
 
     <b-table-simple hover small caption-top responsive>
-        <caption>Input Data</caption>
+        <caption>Opportunity Details</caption>
         <b-thead head-variant="dark">
             <b-tr>
                 <b-th>State</b-th>

@@ -1,6 +1,6 @@
 <template>
+    <b-col md="auto">
     <b-card :header="title" style="max-width: 20rem">
-
         <div v-if="this.calculateClicked">
             <display-inputs :user-data="userData"></display-inputs>
             <calculate-tax
@@ -20,6 +20,7 @@
         <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
         <b-button block v-on:click="reset">Reset</b-button>
     </b-card>
+    </b-col>
 </template>
 
 <script>

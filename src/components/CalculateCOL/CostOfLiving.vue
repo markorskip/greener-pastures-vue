@@ -1,72 +1,92 @@
 <template>
-    <div class="CalculateCOL">
-        <br/><h5>Cost of Living</h5>
-        <b-link href="https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/">A dollar in {{ state }} is worth {{ this.multiplier }}</b-link>
-        Your after tax pay is worth: <br/>
-        <h1><b> {{ this.afterTaxWorth }}</b></h1>
-        <br/>
-    </div>
+        <b-table-simple hover small caption-top responsive>
+            <caption>
+                Cost of Living
+                <b-icon-info-circle v-b-popover.hover.bottom="'Dollar worth represents how much a dollar is worth.  Avg Rent indicates average monthly rent'">
+                </b-icon-info-circle>
+            </caption>
+            <b-thead head-variant="dark">
+                <b-tr>
+                    <b-th>State</b-th>
+                    <b-th>Avg Rent</b-th>
+                    <b-th>Dollar Worth</b-th>
+                </b-tr>
+            </b-thead>
+            <b-tbody>
+                <b-tr>
+                    <b-td>{{ this.state}}</b-td>
+                    <b-td>{{ displayRent }}</b-td>
+                    <b-td>{{ multiplier }}</b-td>
+                </b-tr>
+            </b-tbody>
+            <b-tfoot>
+                <b-tr>
+                    <b-td colspan="3" variant="success" class="text-center">
+                        <h4>Final Pay: <b>{{ afterTaxWorth }}</b></h4>
+                    </b-td>
+                </b-tr>
+            </b-tfoot>
+        </b-table-simple>
 </template>
 
 <script>
-
 
     // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
     import {thousandsSeparators} from "@/utilities";
 
     let colMapping = {
-        "AL":"1.1",
-        "AK":"0.9",
-        "AZ":"1.0",
-        "AR":"1.1",
-        "CA":"0.8",
-        "CO":"0.97",
-        "CT":"0.92",
-        "DE":"1.00",
-        "FL":"1.00",
-        "GA":"1.09",
-        "HI":"0.84",
-        "ID":"1.08",
-        "IL":"1.01",
-        "IN":"1.11",
-        "IA":"1.11",
-        "KS":"1.10",
-        "KY":"1.14",
-        "LA":"1.11",
-        "ME":"1.02",
-        "MD":"0.91",
-        "MA":"0.93",
-        "MI":"1.07",
-        "MN":"1.03",
-        "MS":"1.16",
-        "MO":"1.12",
-        "MT":"1.06",
-        "NE":"1.10",
-        "NV":"1.03",
-        "NH":"0.94",
-        "NJ":"0.88",
-        "NM":"1.07",
-        "NY":"0.87",
-        "NC":"1.10",
-        "ND":"1.09",
-        "OH":"1.12",
-        "OK":"1.12",
-        "OR":"1.00",
-        "PA":"1.02",
-        "RI":"1.00",
-        "SC":"1.11",
-        "SD":"1.13",
-        "TN":"1.11",
-        "TX":"1.03",
-        "UT":"1.03",
-        "VT":"0.98",
-        "VA":"0.98",
-        "WA":"0.95",
-        "WV":"1.14",
-        "WI":"1.08",
-        "WY":"1.03",
-        "DC":"0.84"
-    };
+        "AL": { dollar: "1.1",  rent: "$998"},
+        "AK": { dollar: "0.9", rent: "$1,748"},
+        "AZ": { dollar: "1.0", rent: "$1,356"},
+        "AR": { dollar: "1.1", rent: "$953"},
+        "CA": { dollar: "0.8", rent: "$2,518"},
+        "CO": { dollar: "0.97", rent: "$1,927"},
+        "CT": { dollar: "0.92", rent: "$1,803"},
+        "DE": { dollar: "1.00", rent: "$1,435"},
+        "FL": { dollar: "1.00", rent: "$1,590"},
+        "GA": { dollar: "1.09", rent: "$1,262"},
+        "HI": { dollar: "0.84", rent: "$2,481"},
+        "ID": { dollar: "1.08", rent: "$1,238"},
+        "IL": { dollar: "1.01", rent: "$1,463"},
+        "IN": { dollar: "1.11", rent: "$1,113"},
+        "IA": { dollar: "1.11", rent: "$1,057"},
+        "KS": { dollar: "1.10", rent: "$1,051"},
+        "KY": { dollar: "1.14", rent: "$1,084"},
+        "LA": { dollar: "1.11", rent: "$1,245"},
+        "ME": { dollar: "1.02", rent: "$1,466"},
+        "MD": { dollar: "0.91", rent: "$1,807"},
+        "MA": { dollar: "0.93", rent: "$2,252"},
+        "MI": { dollar: "1.07", rent: "$1,110"},
+        "MN": { dollar: "1.03", rent: "$1,449"},
+        "MS": { dollar: "1.16", rent: "$1,055"},
+        "MO": { dollar: "1.12", rent: "$1,047"},
+        "MT": { dollar: "1.06", rent: "$1,234"},
+        "NE": { dollar: "1.10", rent: "$1,253"},
+        "NV": { dollar: "1.03", rent: "$1,423"},
+        "NH": { dollar: "0.94", rent: "$1,748"},
+        "NJ": { dollar: "0.88", rent: "$2,062"},
+        "NM": { dollar: "1.07", rent: "$1,200"},
+        "NY": { dollar: "0.87", rent: "$2,050"},
+        "NC": { dollar: "1.10", rent: "$1,208"},
+        "ND": { dollar: "1.09", rent: "$1,290"},
+        "OH": { dollar: "1.12", rent: "$1,113"},
+        "OK": { dollar: "1.12", rent: "$950"},
+        "OR": { dollar: "1.00", rent: "$1,707"},
+        "PA": { dollar: "1.02", rent: "$1,242"},
+        "RI": { dollar: "1.00", rent: "$1,725"},
+        "SC": { dollar: "1.11", rent: "$1,209"},
+        "SD": { dollar: "1.13", rent: "$1,213"},
+        "TN": { dollar: "1.11", rent: "$1,153"},
+        "TX": { dollar: "1.03", rent: "$1,455"},
+        "UT": { dollar: "1.03", rent: "$1,526"},
+        "VT": { dollar: "0.98", rent: "$1,599"},
+        "VA": { dollar: "0.98", rent: "$1,452"},
+        "WA": { dollar: "0.95", rent: "$1,838"},
+        "WV": { dollar: "1.14", rent: "$888"},
+        "WI": { dollar: "1.08", rent: "$1,141"},
+        "WY": {dollar: "1.03", rent: "$1,149"},
+        "DC": {dollar: "0.84", rent: "$2339"}
+        }
 
     export default {
         props: {
@@ -75,12 +95,15 @@
         },
         computed: {
             multiplier: function() {
-                return colMapping[this.state];
+                return colMapping[this.state].dollar;
             },
             afterTaxWorth: function() {
                 const afterTax = (this.afterTaxIncome * this.multiplier).toFixed(2);
                 if (isNaN(afterTax))  return null;
                 else return thousandsSeparators(afterTax);
+            },
+            displayRent: function() {
+                return colMapping[this.state].rent;
             }
         }
     };

@@ -32,6 +32,7 @@
         </b-col>
       </b-row>
 
+      <b-row>
       <b-card-group deck>
         <OpportunityForm v-for="(opportunity, index) in this.opportunities"
                          v-bind:opportunity="opportunity"
@@ -40,7 +41,7 @@
                          v-on:deleteOpportunity="deleteOpportunity(index)"
         ></OpportunityForm>
       </b-card-group><br/>
-
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -64,8 +65,13 @@ export default {
   },
   methods: {
     addOpportunity() {
-      this.idCount++;
-      this.opportunities.push({id: this.idCount})
+      if (this.opportunities.length < 5) {
+        this.idCount++;
+        this.opportunities.push({id: this.idCount})
+        } else {
+        alert("Limit to 5 opportunities")
+      }
+
     },
     deleteOpportunity(index) {
       if (this.opportunities.length > 1) {

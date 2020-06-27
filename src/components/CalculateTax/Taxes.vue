@@ -1,8 +1,10 @@
 <template>
     <div class="CalculateTax">
-
             <b-table-simple hover small caption-top responsive>
-                <caption>Estimated Taxes</caption>
+                <caption>Estimated Income Taxes
+                    <b-icon-info-circle v-b-popover.hover.bottom="'Does not include local, sales, or property taxes'">
+                    </b-icon-info-circle>
+                </caption>
                 <b-thead head-variant="dark">
                     <b-tr>
                         <b-th>Federal</b-th>
