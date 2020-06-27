@@ -1,13 +1,30 @@
 <template>
   <div id="app">
     <b-container>
-      <b-row>
-      <div id="title">
-        <h1>Best Opportunity Calculator</h1>
-        <h5>Enter your current and potential opportunities for comparison</h5><br/>
-       <b-button variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
+      <div>
+        <b-button block v-b-toggle.collapse-1 variant="primary">Greener Pastures! Find your best job now</b-button>
+        <b-collapse id="collapse-1" class="mt-2">
+          <b-card>
+            <p class="card-text">
+              Welcome to Greener Pastures!
+            </p>
+            <p>
+              This app is designed to help your actual compensation for a job based on taxes and cost of living.  It will
+              allow you compare job offers in different locations.
+            </p>
+            <p>
+              To use:
+              Enter your different job opportunities below.  Click calculate to determine what your after tax pay
+              is worth in that location.  Compare multiple opportunities.
+            </p>
+          </b-card>
+        </b-collapse>
       </div>
-      </b-row>
+
+      <div id="title">
+       <b-button block variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
+      </div>
+
       <b-card-group deck>
         <OpportunityForm v-for="(opportunity, index) in this.opportunities"
                          v-bind:opportunity="opportunity"
@@ -52,21 +69,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  align-content: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  margin:auto;
-  position:relative;
-  width: 1200px;
-}
-
-  #title {
-    text-align: center;
-  }
-</style>

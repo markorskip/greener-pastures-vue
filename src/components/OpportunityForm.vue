@@ -36,7 +36,7 @@
     import CalculateTax from "@/components/CalculateTax/Taxes";
     import CalculateCOL from "@/components/CalculateCOL/CostOfLiving";
     import Display from "@/components/Display/GreenerPastureScore";
-    import DisplayInputs from "@/components/InputForm/DisplayInputs/DisplayInputs";
+    import DisplayInputs from "@/components/InputForm/DisplayInputs";
     export default {
         name: 'OpportunityForm',
         components: {DisplayInputs, CalculateCOL, CalculateTax, Display, InputForm },
