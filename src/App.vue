@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <div id="title">
-      <h1>Best Opportunity Calculator</h1>
-      <h5>Enter your current and potential opportunities for comparison</h5><br/>
-     <b-button variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
-    </div>
-    <b-card-group deck>
-      <OpportunityForm v-for="(opportunity, index) in this.opportunities"
-                       v-bind:opportunity="opportunity"
-                       v-bind:index="index"
-                       v-bind:key="opportunity.id"
-                       v-on:deleteOpportunity="deleteOpportunity(index)"
-      ></OpportunityForm>
-    </b-card-group><br/>
+    <b-container>
+      <b-row>
+      <div id="title">
+        <h1>Best Opportunity Calculator</h1>
+        <h5>Enter your current and potential opportunities for comparison</h5><br/>
+       <b-button variant="success" @click="addOpportunity">+ Add Another Opportunity</b-button><br/><br/>
+      </div>
+      </b-row>
+      <b-card-group deck>
+        <OpportunityForm v-for="(opportunity, index) in this.opportunities"
+                         v-bind:opportunity="opportunity"
+                         v-bind:index="index"
+                         v-bind:key="opportunity.id"
+                         v-on:deleteOpportunity="deleteOpportunity(index)"
+        ></OpportunityForm>
+      </b-card-group><br/>
+    </b-container>
   </div>
 </template>
 
