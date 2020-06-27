@@ -68,12 +68,6 @@
     export default {
         props: {
             userData: Object
-        },
-        methods: {
-            emitUserData() {
-                console.log(this.userData);
-                this.$emit('emitUserData',this.userData)
-            }
         }
     };
 </script>

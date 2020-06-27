@@ -12,7 +12,7 @@
 
 
     // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
-    import {thousandsSeparators} from "currency-thousand-separator";
+    import {thousandsSeparators} from "@/utilities";
 
     let colMapping = {
         "AL":"1.1",

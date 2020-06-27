@@ -2,13 +2,12 @@
     <b-card
             sub-title="Enter opportunity data below"
             style="max-width: 20rem">
-        <input-form
-                :user-data.sync="userData"
-                ></input-form>
-        <div v-show="this.calculateClicked">
+
+        <div v-if="this.calculateClicked">
+            <display-inputs :user-data="userData"></display-inputs>
             <calculate-tax
-                    v-bind:annual="this.annual"
-                    v-bind:salary="this.userData.salary"
+                    :annual="this.annual"
+                    :userData="this.userData"
                     v-bind:totalTax.sync="totalTax"></calculate-tax>
             <calculate-c-o-l
                     v-bind:state="this.userData.state"
@@ -20,13 +19,12 @@
                     :total-tax="this.totalTax"
                     :total-col="this.totalCol" ></display>
         </div>
-
-        <b-button block variant="primary"
-                  v-on:click="calculateTax">Calculate
-        </b-button>
-        <b-button block variant="danger"
-                  v-on:click="deleteOpportunity">Delete
-        </b-button>
+        <div v-else>
+            <input-form :user-data="userData"></input-form>
+            <b-button block variant="primary" v-on:click="calculateTax">Calculate</b-button>
+        </div>
+        <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
+        <b-button block v-on:click="reset">Reset</b-button>
     </b-card>
 </template>
 
@@ -38,14 +36,15 @@
     import CalculateTax from "@/components/CalculateTax/Taxes";
     import CalculateCOL from "@/components/CalculateCOL/CostOfLiving";
     import Display from "@/components/Display/GreenerPastureScore";
+    import DisplayInputs from "@/components/InputForm/DisplayInputs/DisplayInputs";
     export default {
         name: 'OpportunityForm',
-        components: {CalculateCOL, CalculateTax, Display, InputForm },
+        components: {DisplayInputs, CalculateCOL, CalculateTax, Display, InputForm },
         data: function () {
             return {
                 userData: {
-                    state: null,
-                    salary: null,
+                    state: "AL",
+                    salary: "0",
                     filing_status: "single",
                 },
                 annual: {
@@ -56,23 +55,16 @@
                 totalTax: 0,
                 totalCol: 0,
                 col: 0,
-                taxData: null,
+                taxData: 0,
                 calculateClicked: false
             }
         },
         computed: {
-            totalColCalculation() {
-                return this.col;
-            },
             afterTaxIncome() {
                 return this.userData.salary - this.totalTax;
             }
         },
         methods: {
-            update(event) {
-                this.userData = event;
-                this.calculateTax();
-            },
             calculateTax() {
                 if (this.userData.state == null) { alert("Enter State"); return null; }
                 if (this.userData.salary == null) { alert("Enter Salary Data"); return null; }
@@ -99,10 +91,13 @@
             },
             deleteOpportunity() {
                 this.$emit('deleteOpportunity')
+            },
+            reset() {
+                console.log("Reset clicked");
+                this.userData.salary = null;
+                this.userData.state = "AL";
+                this.calculateClicked = false;
             }
-        },
-        mounted() {
-            console.log("Mounted!");
         }
     }
 </script>

@@ -12,16 +12,17 @@
 </template>
 
 <script>
-    import {thousandsSeparators} from "currency-thousand-separator";
+
+    import {thousandsSeparators} from "@/utilities";
 
     export default {
         props: {
             annual: Object,
-            salary: Object,
+            userData: Object,
         },
         data() {
             return {
-                showStateTax: false
+                salary: this.userData.salary
             }
         },
         computed: {
