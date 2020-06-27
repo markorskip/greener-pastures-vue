@@ -14,10 +14,6 @@
                     v-bind:after-tax-income="afterTaxIncome"
                     :totalCol.sync="totalCol" >
             </calculate-c-o-l>
-            <display
-                    :salary="this.userData.salary"
-                    :total-tax="this.totalTax"
-                    :total-col="this.totalCol" ></display>
         </div>
         <div v-else>
             <input-form :user-data="userData"></input-form>
@@ -35,11 +31,10 @@
     import InputForm from "@/components/InputForm/InputForm";
     import CalculateTax from "@/components/CalculateTax/Taxes";
     import CalculateCOL from "@/components/CalculateCOL/CostOfLiving";
-    import Display from "@/components/Display/GreenerPastureScore";
     import DisplayInputs from "@/components/InputForm/DisplayInputs";
     export default {
         name: 'OpportunityForm',
-        components: {DisplayInputs, CalculateCOL, CalculateTax, Display, InputForm },
+        components: {DisplayInputs, CalculateCOL, CalculateTax, InputForm },
         data: function () {
             return {
                 userData: {

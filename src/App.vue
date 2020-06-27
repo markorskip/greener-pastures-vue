@@ -2,7 +2,7 @@
   <div id="app">
     <b-container>
       <div>
-        <b-button block v-b-toggle.collapse-1 variant="primary">Greener Pastures! Find your best job now</b-button>
+        <b-button block v-b-toggle.collapse-1 variant="primary">Greener Pastures - Find Your Best Opportunity!</b-button>
         <b-collapse id="collapse-1" class="mt-2">
           <b-card>
             <p class="card-text">

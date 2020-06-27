@@ -80,7 +80,7 @@
             afterTaxWorth: function() {
                 const afterTax = (this.afterTaxIncome * this.multiplier).toFixed(2);
                 if (isNaN(afterTax))  return null;
-                else return "$" + thousandsSeparators(afterTax);
+                else return thousandsSeparators(afterTax);
             }
         }
     };

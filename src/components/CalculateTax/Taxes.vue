@@ -2,12 +2,12 @@
     <div class="CalculateTax">
         <br/>
         <div id="taxes">
-            Federal Tax: ${{ fedTax }} <br/>
-            <span v-if="annual.state.amount > 0">State Tax: ${{ stateTax }} <br/></span>
-            Fica Tax: ${{ ficaTax }} <br/>
+            Federal Tax: {{ fedTax }} <br/>
+            <span v-if="annual.state.amount > 0">State Tax: {{ stateTax }} <br/></span>
+            Fica Tax: {{ ficaTax }} <br/>
+            <i>After Tax Pay is {{ afterTaxPay }} dollars.</i>
         </div>
-<!--            Taxes as percentage of income: {{ taxPercentage }} <br/>-->
-        <i>After Tax Pay is {{ afterTaxPay }} dollars.</i>
+
     </div>
 </template>
 
@@ -30,9 +30,6 @@
                 let totalTaxCalc = this.annual.fica.amount + this.annual.federal.amount + this.annual.state.amount;
                 this.$emit('update:totalTax',totalTaxCalc);
                 return totalTaxCalc;
-            },
-            taxPercentage() {
-                return this.totalTax / this.salary;
             },
             fedTax() {
                 return thousandsSeparators(this.annual.federal.amount);
