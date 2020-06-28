@@ -8,7 +8,7 @@
           Greener Pastures - Find Your Best Opportunity!
         </b-button>
         <b-collapse id="collapse-1" class="mt-2">
-          <b-card>
+          <b-card class="mb-1">
             <p class="card-text">
               Welcome to Greener Pastures!
             </p>
