@@ -1,23 +1,25 @@
 <template>
     <div>
 
-    <b-table-simple hover small caption-top responsive>
-        <caption>Opportunity Details</caption>
-        <b-thead head-variant="dark">
-            <b-tr>
-                <b-th>State</b-th>
-                <b-th>Salary</b-th>
-                <b-th>Status</b-th>
-            </b-tr>
-        </b-thead>
+    <b-table-simple striped hover small caption-top responsive>
+        <caption>Details</caption>
         <b-tbody>
             <b-tr>
-                <b-td>{{ this.userData.state}}</b-td>
-                <b-td>{{ displaySalary}}</b-td>
+                <b-td>State:</b-td>
+                <b-td>{{ this.userData.state }}</b-td>
+            </b-tr>
+            <b-tr>
+                <b-td>Salary:</b-td>
+                <b-td>{{ displaySalary }}</b-td>
+            </b-tr>
+            <b-tr>
+                <b-td>Filing Status:</b-td>
                 <b-td>{{ displayFilingStatus }}</b-td>
             </b-tr>
         </b-tbody>
     </b-table-simple>
+
+
     </div>
 </template>
 

@@ -14,8 +14,8 @@
               Welcome to Greener Pastures!
             </p>
             <p>
-              This app is designed to help your actual compensation for a job based on taxes and cost of living.  It will
-              allow you compare job offers in different locations.
+              This app is designed to help you calculate actual compensation for a job based on taxes and cost of living.  It will
+              allow you compare opportunities in different locations.
             </p>
             <p>
               To use:
@@ -38,7 +38,9 @@
                          v-bind:opportunity="opportunity"
                          v-bind:index="index"
                          v-bind:key="opportunity.id"
+                         v-bind:best="opportunity.best"
                          v-on:deleteOpportunity="deleteOpportunity(index)"
+                         v-on:update-adj-pay-to-app="updateOpportunityList(index, $event)"
         ></OpportunityForm>
       </b-card-group><br/>
       </b-row>
@@ -58,7 +60,7 @@ export default {
   data() {
     return {
       opportunities: [
-        {id: 1}
+        {id: 1, adjPay: null, best: false}
       ],
       idCount: 1
     }
@@ -67,11 +69,11 @@ export default {
     addOpportunity() {
       if (this.opportunities.length < 5) {
         this.idCount++;
-        this.opportunities.push({id: this.idCount})
+        this.opportunities.push({id: this.idCount, adjPay: null, best: false})
         } else {
         alert("Limit to 5 opportunities")
       }
-
+      this.bestOpportunity();
     },
     deleteOpportunity(index) {
       if (this.opportunities.length > 1) {
@@ -79,6 +81,30 @@ export default {
       } else {
         alert("Must have at least one opportunity")
       }
+      this.bestOpportunity();
+    },
+    updateOpportunityList(index, event) {
+      this.opportunities[index].adjPay = event;
+      this.bestOpportunity();
+    },
+    bestOpportunity() {
+      let bestIndex = null;
+      let highest = 0;
+
+      for (let index = 0; index < this.opportunities.length; index++) {
+        if (Number(this.opportunities[index].adjPay) > highest) {
+          bestIndex = index;
+          highest = this.opportunities[index].adjPay;
+        }
+      }
+
+      for (let i = 0; i < this.opportunities.length; i++) {
+        this.opportunities[i].best = false;
+      }
+
+      console.log(this.opportunities);
+      this.opportunities[bestIndex].best = true;
+      console.log("BEST OPPORTUNITY IS:" + bestIndex);
     }
   }
 }

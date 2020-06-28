@@ -1,6 +1,13 @@
 <template>
     <b-col md="auto">
-    <b-card :header="title" style="max-width: 20rem">
+    <b-card
+            :header="title"
+            style="max-width: 20rem"
+    >
+        <div v-show="best" variant="success">
+            <b-icon-flag v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'" variant="success"></b-icon-flag>
+            TOP PAY!!!
+        </div>
         <div v-if="this.calculateClicked">
             <display-inputs :user-data="userData"></display-inputs>
             <calculate-tax
@@ -10,12 +17,12 @@
             <calculate-c-o-l
                     v-bind:state="this.userData.state"
                     v-bind:after-tax-income="afterTaxIncome"
-                    :totalCol.sync="totalCol" >
+                     v-on:update-adj-pay="updateAdjPay">
             </calculate-c-o-l>
         </div>
         <div v-else>
-            <input-form :user-data="userData"></input-form>
-            <b-button block variant="primary" v-on:click="calculateTax">Calculate</b-button>
+        <input-form :user-data="userData"></input-form>
+        <b-button block variant="primary" v-on:click="calculateTax">Calculate</b-button>
         </div>
         <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
         <b-button block v-on:click="reset">Reset</b-button>
@@ -34,6 +41,9 @@
     export default {
         name: 'OpportunityForm',
         components: {DisplayInputs, CalculateCOL, CalculateTax, InputForm },
+        props: {
+            best: Boolean
+        },
         data: function () {
             return {
                 userData: {
@@ -52,7 +62,8 @@
                 col: 0,
                 taxData: 0,
                 calculateClicked: false,
-                title: 'Enter Opportunity Data Below'
+                title: 'Enter Opportunity Data Below',
+                adjPay: null,
             }
         },
         computed: {
@@ -95,6 +106,10 @@
                 this.userData.state = "AL";
                 this.calculateClicked = false;
                 this.title = "Enter Opportunity Data Below";
+            },
+            updateAdjPay(event) {
+                this.adjPay = event;
+                this.$emit('update-adj-pay-to-app',this.adjPay, this.index);
             }
         }
     }
