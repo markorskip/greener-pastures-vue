@@ -5,8 +5,9 @@
             style="max-width: 20rem"
     >
         <div v-show="best" variant="success">
-            <b-icon-flag v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'" variant="success"></b-icon-flag>
-            TOP PAY!!!
+            <b-alert variant="success" show v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'">
+                BEST PAY!
+            </b-alert>
         </div>
         <div v-if="this.calculateClicked">
             <display-inputs :user-data="userData"></display-inputs>
@@ -104,6 +105,7 @@
             },
             reset() {
                 console.log("Reset clicked");
+                this.updateAdjPay(0);
                 this.userData.salary = null;
                 this.userData.state = "AL";
                 this.calculateClicked = false;
