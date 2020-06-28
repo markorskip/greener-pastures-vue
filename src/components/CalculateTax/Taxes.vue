@@ -2,7 +2,7 @@
     <div class="CalculateTax">
         <b-table-simple striped hover small caption-top responsive>
             <caption>Estimated Income Taxes
-                <b-icon-info-circle v-b-popover.hover.bottom="'Does not include local, sales, or property taxes'">
+                <b-icon-info-circle v-b-popover.click.bottom="'Does not include local, sales, or property taxes'">
                 </b-icon-info-circle>
             </caption>
             <b-tbody v-if="showAll">
@@ -25,7 +25,7 @@
                     <b-td>{{ ficaTax }}</b-td>
                 </b-tr>
                 <b-tr variant="primary">
-                    <b-td>Income after Taxes:</b-td>
+                    <b-td>Income After Taxes:</b-td>
                     <b-td>{{ afterTaxPay }}</b-td>
                 </b-tr>
             </b-tbody>

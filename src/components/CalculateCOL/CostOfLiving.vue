@@ -1,36 +1,8 @@
 <template>
-<!--        <b-table-simple hover small caption-top responsive>-->
-<!--            <caption>-->
-<!--                Cost of Living-->
-<!--                <b-icon-info-circle v-b-popover.hover.bottom="'Dollar worth represents how much a dollar is worth in that location.  Avg rent indicates average monthly rent'">-->
-<!--                </b-icon-info-circle>-->
-<!--            </caption>-->
-<!--            <b-thead head-variant="dark">-->
-<!--                <b-tr>-->
-<!--                    <b-th>State</b-th>-->
-<!--                    <b-th>Avg Rent</b-th>-->
-<!--                    <b-th>Dollar Worth</b-th>-->
-<!--                </b-tr>-->
-<!--            </b-thead>-->
-<!--            <b-tbody>-->
-<!--                <b-tr>-->
-<!--                    <b-td>{{ this.state}}</b-td>-->
-<!--                    <b-td>{{ displayRent }}</b-td>-->
-<!--                    <b-td>${{ multiplier }}</b-td>-->
-<!--                </b-tr>-->
-<!--            </b-tbody>-->
-<!--            <b-tfoot>-->
-<!--                <b-tr>-->
-<!--                    <b-td colspan="3" variant="success" class="text-center">-->
-<!--                        <h4>Final Pay: <b>{{ afterTaxWorth }}</b></h4>-->
-<!--                    </b-td>-->
-<!--                </b-tr>-->
-<!--            </b-tfoot>-->
-<!--        </b-table-simple>-->
     <b-table-simple striped hover small caption-top responsive>
         <caption>
             Cost of Living
-            <b-icon-info-circle v-b-popover.hover.bottom="'Value of a dollar represents how much a dollar is worth in that location.'">
+            <b-icon-info-circle v-b-popover.click.bottom="'Value of a dollar represents how much a dollar is worth in that location.'">
             </b-icon-info-circle>
         </caption>
         <b-tbody>
@@ -43,7 +15,7 @@
                 <b-td>${{ multiplier }}</b-td>
             </b-tr>
             <b-tr variant="success">
-                <b-td><b>Adjusted Pay</b></b-td>
+                <b-td><b>Adjusted Pay:</b></b-td>
                 <b-td><b>{{ displayAdjustedIncome }}</b></b-td>
             </b-tr>
         </b-tbody>
