@@ -3,10 +3,9 @@
     <b-container>
       <b-row>
         <b-col>
-        <b-button block v-b-toggle.collapse-1 variant="primary">
+        <b-button block v-b-toggle.collapse-1 variant="primary" class="mb-1 mt-1">
           <b-icon-chevron-bar-expand></b-icon-chevron-bar-expand>
           Greener Pastures - Find Your Best Opportunity!
-
         </b-button>
         <b-collapse id="collapse-1" class="mt-2">
           <b-card>
