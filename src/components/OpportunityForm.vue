@@ -20,10 +20,12 @@
                      v-on:update-adj-pay="updateAdjPay">
             </calculate-c-o-l>
         </div>
+
         <div v-else>
-        <input-form :user-data="userData"></input-form>
-        <b-button block variant="primary" v-on:click="calculateTax">Calculate</b-button>
+            <input-form :user-data="userData"></input-form>
+            <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
         </div>
+
         <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
         <b-button block v-on:click="reset">Reset</b-button>
     </b-card>
