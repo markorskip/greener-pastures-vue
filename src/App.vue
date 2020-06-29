@@ -43,17 +43,22 @@
         ></OpportunityForm>
       </b-card-group><br/>
       </b-row>
+      <b-row>
+
+      </b-row>
     </b-container>
+    <adsense></adsense>
   </div>
 </template>
 
 <script>
 import OpportunityForm from './components/OpportunityForm.vue'
-
+import Adsense from "@/components/adsense/adsense";
 
 export default {
   name: 'App',
   components: {
+    Adsense,
     OpportunityForm
   },
   data() {
