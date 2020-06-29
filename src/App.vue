@@ -110,6 +110,13 @@ export default {
       this.opportunities[bestIndex].best = true;
       console.log("BEST OPPORTUNITY IS:" + bestIndex);
     }
-  }
+  },
+  mounted() {
+    let script = document.createElement('script')
+    script.setAttribute('src', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
+    script.setAttribute('data-ad-client','ca-pub-7765547537548526');
+    script.async = true;
+    document.head.appendChild(script);
+  },
 }
 </script>
