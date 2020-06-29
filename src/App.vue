@@ -43,22 +43,15 @@
         ></OpportunityForm>
       </b-card-group><br/>
       </b-row>
-      <b-row>
-
-      </b-row>
     </b-container>
-    <adsense></adsense>
   </div>
 </template>
 
 <script>
 import OpportunityForm from './components/OpportunityForm.vue'
-import Adsense from "@/components/adsense/adsense";
-
 export default {
   name: 'App',
   components: {
-    Adsense,
     OpportunityForm
   },
   data() {
@@ -110,13 +103,6 @@ export default {
       this.opportunities[bestIndex].best = true;
       console.log("BEST OPPORTUNITY IS:" + bestIndex);
     }
-  },
-  mounted() {
-    let script = document.createElement('script')
-    script.setAttribute('src', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
-    script.setAttribute('data-ad-client','ca-pub-7765547537548526');
-    script.async = true;
-    document.head.appendChild(script);
-  },
+  }
 }
 </script>
