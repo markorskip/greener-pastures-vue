@@ -6,6 +6,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Ads from 'vue-google-adsense'
 
+import VueAnalytics from 'vue-ua'
+
+
 Vue.use(require('vue-script2'))
 Vue.use(Ads.Adsense)
 
@@ -19,3 +22,11 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
+Vue.use(VueAnalytics, {
+  // [Required] The name of your app as specified in Google Analytics.
+  appName: 'Greener Pastures',
+  // [Required] The version of your app.
+  appVersion: '1.0',
+  // [Required] Your Google Analytics tracking ID.
+  trackingId: 'UA-37301669-3'
+});
