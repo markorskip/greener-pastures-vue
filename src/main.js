@@ -6,7 +6,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Ads from 'vue-google-adsense'
 
-import VueAnalytics from 'vue-ua'
+import VueAnalytics from 'vue-analytics'
 
 
 Vue.use(require('vue-script2'))
