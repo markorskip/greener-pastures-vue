@@ -1,29 +1,26 @@
 <template>
     <b-col md="auto">
     <b-card
-            :header="title"
             style="max-width: 20rem"
     >
-        <div v-show="best" variant="success">
+        <div v-show="this.opp.best" variant="success">
             <b-alert variant="success" show v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'">
                 BEST PAY!
             </b-alert>
         </div>
-        <div v-if="this.calculateClicked">
-            <display-inputs :user-data="userData"></display-inputs>
+        <div v-if="this.opp.calculateClicked">
+            <display-inputs :user-data="this.opp.userData"></display-inputs>
             <calculate-tax
-                    :annual="this.annual"
-                    :userData="this.userData"
-                    v-bind:totalTax.sync="totalTax"></calculate-tax>
+                    :annual="this.opp.annual"
+                    :userData="this.opp.userData"></calculate-tax>
             <calculate-c-o-l
-                    v-bind:state="this.userData.state"
-                    v-bind:after-tax-income="afterTaxIncome"
-                     v-on:update-adj-pay="updateAdjPay">
+                    :state="this.opp.userData.state"
+                    :after-tax-income="this.opp.afterTaxIncome">
             </calculate-c-o-l>
         </div>
 
         <div v-else>
-            <input-form :user-data="userData"></input-form>
+            <input-form :user-data="this.opp.userData"></input-form>
             <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
         </div>
 
@@ -37,50 +34,27 @@
     import axios from 'axios';
     let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
 
-    import InputForm from "@/components/InputForm/InputForm";
-    import CalculateTax from "@/components/CalculateTax/Taxes";
-    import CalculateCOL from "@/components/CalculateCOL/CostOfLiving";
-    import DisplayInputs from "@/components/InputForm/DisplayInputs";
+    import InputForm from "@/components/inputForm/InputForm";
+    import CalculateTax from "@/components/calculateTax/Taxes";
+    import CalculateCOL from "@/components/calculateCOL/CostOfLiving";
+    import DisplayInputs from "@/components/inputForm/DisplayInputs";
     export default {
         name: 'OpportunityForm',
         components: {DisplayInputs, CalculateCOL, CalculateTax, InputForm },
         props: {
-            best: Boolean
-        },
-        data: function () {
-            return {
-                userData: {
-                    jobName: null,
-                    state: "AL",
-                    salary: null,
-                    filing_status: "single",
-                },
-                annual: {
-                    federal: {amount: null},
-                    state: {amount: 0},
-                    fica: {amount: null}
-                },
-                totalTax: 0,
-                totalCol: 0,
-                col: 0,
-                taxData: 0,
-                calculateClicked: false,
-                title: 'Enter Opportunity Data Below',
-                adjPay: null,
-            }
+            opp: Object
         },
         computed: {
             afterTaxIncome() {
-                return this.userData.salary - this.totalTax;
+                return this.opp.userData.salary - this.opp.totalTax;
             }
         },
-        methods: {
+         methods: {
             calculateTax() {
-                if (this.userData.state == null) { alert("Enter State"); return null; }
-                if (this.userData.salary == null) { alert("Enter Salary Data"); return null; }
+                if (this.opp.userData.state == null) { alert("Enter State"); return null; }
+                if (this.opp.userData.salary == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
-                this.calculateClicked = true;
-                this.title = this.userData.jobName;
+                this.opp.calculateClicked = true;
                 axios({
                     method: 'post',
                     headers: {
@@ -89,30 +63,30 @@
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: {
-                        state: this.userData.state,
-                        pay_rate: this.userData.salary,
-                        filing_status: this.userData.filing_status
+                        state: this.opp.userData.state,
+                        pay_rate: this.opp.userData.salary,
+                        filing_status: this.opp.userData.filing_status
                     },
                     url: "https://taxee.io/api/v2/calculate/2020",
                 }).then(response => {
                     console.log(response.data.annual);
-                    this.annual = response.data.annual;
+                    this.opp.annual = response.data.annual;
                 })
                     .catch(e => console.log(e))
             },
             deleteOpportunity() {
-                this.$emit('deleteOpportunity')
+                this.$store.commit('deleteOpportunity',this.index);
+                console.log(this.$store.state.opportunities);
             },
             reset() {
                 console.log("Reset clicked");
                 this.updateAdjPay(0);
-                this.userData.salary = null;
-                this.userData.state = "AL";
-                this.calculateClicked = false;
-                this.title = "Enter Opportunity Data Below";
+                this.opp.userData.salary = null;
+                this.opp.userData.state = "AL";
+                this.opp.calculateClicked = false;
             },
             updateAdjPay(event) {
-                this.adjPay = event;
+                this.opp.adjPay = event;
                 this.$emit('update-adj-pay-to-app',this.adjPay, this.index);
             }
         }

@@ -1,14 +1,14 @@
 {
   "name": "greener-pastures-vue",
   "version": "0.1.0",
-  "author": "Skip Sorenson",
   "private": true,
+  "author": "Skip Sorenson",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "node server.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -24,11 +24,14 @@
     "vue-analytics": "^5.22.1",
     "vue-chartjs": "^3.5.0",
     "vue-google-adsense": "^1.8.3",
-    "vue-script2": "^2.1.0"
+    "vue-router": "^3.2.0",
+    "vue-script2": "^2.1.0",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-plugin-router": "^4.4.6",
     "@vue/cli-service": "~4.3.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",

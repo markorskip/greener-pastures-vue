@@ -25,7 +25,7 @@
 <script>
 
     // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
-    import {thousandsSeparators} from "@/utilities";
+    import {thousandsSeparators} from "@/utilities/utilities";
 
     let colMapping = {
         "AL": { dollar: "1.1",  rent: "$998"},

@@ -25,3 +25,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Heroku build information
 heroku local
+
+### Other commands
+npm prune - use this to remove unused dependencies

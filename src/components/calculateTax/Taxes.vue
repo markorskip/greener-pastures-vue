@@ -50,7 +50,7 @@
 
 <script>
 
-    import {thousandsSeparators} from "@/utilities";
+    import {thousandsSeparators} from "@/utilities/utilities";
 
     export default {
         props: {
