@@ -14,6 +14,7 @@
                 Click calculate to determine what your after tax and after cost of living
                 is worth in that location.  Compare multiple opportunities.
             </p>
+            <b-card-img src="./profilePicMarkSorensonJune2020.jpg"></b-card-img>
         </b-card>
     </b-row>
 </template>
