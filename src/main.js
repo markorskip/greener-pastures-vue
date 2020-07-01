@@ -75,7 +75,11 @@ const store = new Vuex.Store({
   },
   mutations: {
     addOpportunity(state) {
-      state.opportunities.push(newOpportunity())
+      if (state.opportunities.length < 5) {
+        state.opportunities.push(newOpportunity())
+      } else {
+        alert ("No more then 5 opportunities");
+      }
     },
     deleteOpportunity(state, indexToDelete) {
       console.log('Delete opportunity with index: ' + indexToDelete);

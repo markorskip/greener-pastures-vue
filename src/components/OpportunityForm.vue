@@ -1,5 +1,5 @@
 <template>
-    <b-col md="auto">
+    <b-col md="auto" class="m-1">
     <b-card
             style="max-width: 20rem"
     >
