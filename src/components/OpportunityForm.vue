@@ -15,7 +15,8 @@
                     :userData="this.opp.userData"></calculate-tax>
             <calculate-c-o-l
                     :state="this.opp.userData.state"
-                    :after-tax-income="this.opp.afterTaxIncome">
+                    :after-tax-income="this.afterTaxIncome"
+                    v-on:update-adj-pay="updateAdjPay">
             </calculate-c-o-l>
         </div>
 
@@ -45,8 +46,13 @@
             opp: Object
         },
         computed: {
+            totalTax() {
+                return this.opp.annual.federal.amount +
+                        this.opp.annual.state.amount +
+                        this.opp.annual.fica.amount;
+            },
             afterTaxIncome() {
-                return this.opp.userData.salary - this.opp.totalTax;
+                return this.opp.userData.salary - this.totalTax;
             }
         },
          methods: {
@@ -87,7 +93,6 @@
             },
             updateAdjPay(event) {
                 this.opp.adjPay = event;
-                this.$emit('update-adj-pay-to-app',this.adjPay, this.index);
             }
         }
     }

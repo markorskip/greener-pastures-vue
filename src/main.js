@@ -61,7 +61,6 @@ function newOpportunity() {
       state: {amount: 0},
       fica: {amount: null}
     },
-    totalTax: 0,
     calculateClicked: false,
     adjPay: null,
     best: false
