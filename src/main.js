@@ -35,6 +35,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "calculator" */ './components/calculator/Calculator.vue')
+  },
+  {
+    path: '/summary',
+    name: 'Summary',
+    component: Summary
   }
 ];
 
@@ -45,6 +50,7 @@ const router = new VueRouter({
 });
 
 import Vuex from 'vuex'
+import Summary from "@/components/summary/Summary";
 Vue.use(Vuex)
 
 

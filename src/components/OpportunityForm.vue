@@ -1,33 +1,31 @@
 <template>
     <b-col md="auto" class="m-1">
-    <b-card
-            style="max-width: 20rem"
-    >
-        <div v-show="this.opp.best" variant="success">
-            <b-alert variant="success" show v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'">
-                BEST PAY!
-            </b-alert>
-        </div>
-        <div v-if="this.opp.calculateClicked">
-            <display-inputs :user-data="this.opp.userData"></display-inputs>
-            <calculate-tax
-                    :annual="this.opp.annual"
-                    :userData="this.opp.userData"></calculate-tax>
-            <calculate-c-o-l
-                    :state="this.opp.userData.state"
-                    :after-tax-income="this.afterTaxIncome"
-                    v-on:update-adj-pay="updateAdjPay">
-            </calculate-c-o-l>
-        </div>
+        <b-card style="max-width: 20rem">
+            <div v-show="this.opp.best" variant="success">
+                <b-alert variant="success" show v-b-popover.hover.bottom="'This opportunity has your highest adjusted pay!!'">
+                    BEST PAY!
+                </b-alert>
+            </div>
+            <div v-if="this.opp.calculateClicked">
+                <display-inputs :user-data="this.opp.userData"></display-inputs>
+                <calculate-tax
+                        :annual="this.opp.annual"
+                        :userData="this.opp.userData"></calculate-tax>
+                <calculate-c-o-l
+                        :state="this.opp.userData.state"
+                        :after-tax-income="this.afterTaxIncome"
+                        v-on:update-adj-pay="updateAdjPay">
+                </calculate-c-o-l>
+            </div>
 
-        <div v-else>
-            <input-form :user-data="this.opp.userData"></input-form>
-            <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
-        </div>
+            <div v-else>
+                <input-form :user-data="this.opp.userData"></input-form>
+                <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
+            </div>
 
-        <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
-        <b-button block v-on:click="reset">Reset</b-button>
-    </b-card>
+            <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
+            <b-button block v-on:click="reset">Reset</b-button>
+        </b-card>
     </b-col>
 </template>
 
@@ -43,6 +41,7 @@
         name: 'OpportunityForm',
         components: {DisplayInputs, CalculateCOL, CalculateTax, InputForm },
         props: {
+            index: Number,
             opp: Object
         },
         computed: {
