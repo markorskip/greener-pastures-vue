@@ -23,10 +23,5 @@ new Vue({
 }).$mount('#app')
 
 Vue.use(VueAnalytics, {
-  // [Required] The name of your app as specified in Google Analytics.
-  appName: 'Greener Pastures',
-  // [Required] The version of your app.
-  appVersion: '1.0',
-  // [Required] Your Google Analytics tracking ID.
-  trackingId: 'UA-37301669-3'
+  id: 'UA-37301669-3'
 });
