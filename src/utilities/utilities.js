@@ -1,4 +1,3 @@
-
 export const thousandsSeparators = num => {
     if (num == null) return 0;
     let numParts = num.toString().split('.');
