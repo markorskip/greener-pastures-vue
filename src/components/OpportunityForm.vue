@@ -93,6 +93,11 @@
             updateAdjPay(event) {
                 this.opp.adjPay = event;
             }
+        },
+        mounted() {
+            this.$ua.trackView("calculator");
+            console.log("Opportunity Form Mounted");
         }
+
     }
 </script>
