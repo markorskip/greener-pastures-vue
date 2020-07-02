@@ -32,9 +32,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "calculator" */ './components/calculator/Calculator.vue')
   },
   {
-    path: '/summary',
-    name: 'Summary',
-    component: Summary
+    path: '/about',
+    name: 'About',
+    component: About
   }
 ];
 
@@ -45,7 +45,7 @@ const router = new VueRouter({
 });
 
 import Vuex from 'vuex'
-import Summary from "@/components/summary/Summary";
+import About from "@/components/about/About";
 Vue.use(Vuex);
 
 
