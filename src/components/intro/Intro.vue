@@ -10,7 +10,7 @@
             <p>
                 <b>To use:<br/></b>
                 1. Enter your different job opportunities in the <router-link to="/calculator">calculator</router-link><br/>
-                2. Click calculate to determine what your after tax and after cost of living is worth in that location.  <br/>
+                2. Click calculate to determine what your after tax and after cost of living is worth in that location<br/>
                 3. Compare multiple opportunities<br/>
             </p>
             </b-card-text>
