@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Intro</router-link> |
-      <router-link to="/calculator">Calculator</router-link> |
+      <router-link to="/calculator">Calculator</router-link>
     </div>
     <b-container>
       <router-view/>
