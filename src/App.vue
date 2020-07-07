@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Intro</router-link> |
-      <router-link to="/calculator">Calculator</router-link>
+      <router-link to="/calculator">Calculate Best Job Opportunity</router-link> |
+      <router-link to="/salaryToSelfEmployedCalculator">Calculate Real Compensation</router-link>
     </div>
     <b-container>
       <router-view/>

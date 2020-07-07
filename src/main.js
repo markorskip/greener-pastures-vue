@@ -29,12 +29,17 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "calculator" */ './components/calculator/Calculator.vue')
+    component: () => import(/* webpackChunkName: "calculator" */ './components/bestJob/BestJobCalculator.vue')
   },
   {
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/SalaryToSelfEmployedCalculator',
+    name: 'SalaryToSelfEmployedCalculator',
+    component: SalaryVsSelfEmployed
   }
 ];
 
@@ -46,6 +51,7 @@ const router = new VueRouter({
 
 import Vuex from 'vuex'
 import About from "@/components/about/About";
+import SalaryVsSelfEmployed from "@/components/realCompensation/RealCompensationCalculator";
 Vue.use(Vuex);
 
 

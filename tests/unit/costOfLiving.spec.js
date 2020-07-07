@@ -1,4 +1,4 @@
-import { calculatePayAfterCostOfLiving, findValueOfADollarByState, displayMedianRentByState }from '@/utilities/costOfLiving.js';
+import { calculatePayAfterCostOfLiving, findValueOfADollarByState, displayMedianRentByState }from '@/components/bestJob/costOfLiving.js';
 
 describe("Cost of Living Service", function() {
 

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import {thousandsSeparators} from "@/utilities/utilities";
+    import {thousandsSeparators} from "@/utilities/formattingUtilities";
 
     export default {
         props: {

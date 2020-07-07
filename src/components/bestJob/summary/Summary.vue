@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import OpportunitySummary from "@/components/summary/OpportunitySummary/OpportunitySummary";
+    import OpportunitySummary from "@/components/bestJob/summary/OpportunitySummary/OpportunitySummary";
     export default {
         components: {OpportunitySummary},
         data: function () {

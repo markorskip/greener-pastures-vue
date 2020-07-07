@@ -2,6 +2,12 @@
     <div>
         <b-row>
             <b-col>
+                <b-card-title>What is my best opportunity?</b-card-title>
+            </b-col>
+
+        </b-row>
+        <b-row>
+            <b-col>
                 <b-button variant="success" @click="addOpportunity" class="mb-2"
                 ><b-icon-plus></b-icon-plus>Add Another Opportunity</b-button>
             </b-col>
@@ -17,10 +23,11 @@
             </b-card-group>
         </b-row>
     </div>
+
 </template>
 
 <script>
-    import OpportunityForm from "@/components/OpportunityForm";
+    import OpportunityForm from "@/components/bestJob/OpportunityForm";
 
     export default {
         name: 'calculator',

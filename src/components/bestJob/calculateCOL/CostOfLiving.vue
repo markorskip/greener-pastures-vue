@@ -25,11 +25,11 @@
 <script>
 
     // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
-    import {thousandsSeparators} from "@/utilities/utilities";
+    import {thousandsSeparators} from "@/utilities/formattingUtilities";
     import { calculatePayAfterCostOfLiving,
         displayMedianRentByState,
         findValueOfADollarByState
-    }from '@/utilities/costOfLiving.js';
+    }from '@/components/bestJob/costOfLiving.js';
 
     export default {
         props: {
