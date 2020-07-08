@@ -24,6 +24,11 @@ const routes = [
     component: Intro
   },
   {
+    path: '/blog',
+    name: 'Blog',
+    component: Blog
+  },
+  {
     path: '/calculator',
     name: 'Calculator',
     // route level code-splitting
@@ -52,6 +57,7 @@ const router = new VueRouter({
 import Vuex from 'vuex'
 import About from "@/components/about/About";
 import SalaryVsSelfEmployed from "@/components/realCompensation/RealCompensationCalculator";
+import Blog from "@/components/blog/Blog";
 Vue.use(Vuex);
 
 

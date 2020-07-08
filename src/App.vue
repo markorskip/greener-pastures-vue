@@ -3,9 +3,10 @@
     <div id="nav">
       <router-link to="/">Intro</router-link> |
       <router-link to="/calculator">Calculate Best Job Opportunity</router-link>
-      <router-link v-show="false" to="/salaryToSelfEmployedCalculator">Calculate Real Compensation</router-link>
+      <router-link v-show="false" to="/salaryToSelfEmployedCalculator">Calculate Real Compensation</router-link> |
+      <router-link v-show="true" to="/blog">Blog</router-link>
     </div>
-    <b-container>
+    <b-container class="align-items-center">
       <router-view/>
     </b-container>
   </div>
