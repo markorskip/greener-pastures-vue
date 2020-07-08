@@ -23,8 +23,6 @@
 </template>
 
 <script>
-    import axios from "axios";
-
     export default {
         methods: {
             returnRandomImageSrc(index) {
@@ -34,11 +32,7 @@
               return src;
           },
             returnRandomPost(index) {
-                let title = '';
-                let post;
-                axios.get("https://api.whatdoestrumpthink.com/api/v1/quotes/random")
-                    .then(response => ({post.title = response.data.message}))
-                    .catch(e => console.log(e));
+                let title = 'Test';
                 return {
                     title: title,
                     description: 'Random description',
