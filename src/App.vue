@@ -9,6 +9,7 @@
     <b-container class="align-items-center">
       <router-view/>
     </b-container>
+    <Subscribe></Subscribe>
   </div>
 </template>
 
@@ -34,3 +35,13 @@
   color: #42b983;
 }
 </style>
+
+
+<script>
+  import { subscribe as Subscribe} from "@/components/bestJob/subscribe/subscribe";
+
+  export default {
+    name: 'App',
+    components: { Subscribe }
+  }
+</script>

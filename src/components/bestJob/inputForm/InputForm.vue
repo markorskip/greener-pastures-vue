@@ -1,16 +1,16 @@
 <template>
     <b-form>
-        <b-form-select v-model="userData.state"  :options="options"></b-form-select>
-        <b-form-radio-group label="Taxpayer Information" v-model="userData.filing_status" :options="filingStatuses">
+        <b-form-select v-model="inputs.state"  :options="options"></b-form-select>
+        <b-form-radio-group label="Taxpayer Information" v-model="inputs.filing_status" :options="filingStatuses">
         </b-form-radio-group>
-        <b-form-input v-model="userData.salary" type="number" placeholder="Salary" step="1000" min="0"></b-form-input>
+        <b-form-input v-model="inputs.pay_rate" type="number" placeholder="Salary" step="1000" min="0"></b-form-input>
     </b-form>
 </template>
 
 <script>
     export default {
         props: {
-            userData: Object
+            inputs: Object
         },
         data() {
             return {

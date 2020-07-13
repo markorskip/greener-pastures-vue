@@ -63,20 +63,26 @@ Vue.use(Vuex);
 
 function newOpportunity() {
   return {
-    userData: {
-      jobName: null,
+    inputs: {
       state: "AL",
-      salary: null,
+      pay_rate: null,
       filing_status: "single",
     },
     annual: {
-      federal: {amount: null},
-      state: {amount: 0},
-      fica: {amount: null}
+      federal: Number,
+      state: Number,
+      fica: Number,
+      totalTax: Number
+    },
+    stateCostOfLiving: {
+      averageRent: Number,
+      valueOfADollar: Number,
+      initials: String,
+      stateName: String,
     },
     calculateClicked: false,
-    adjPay: null,
-    best: false
+    adjPay: Number,
+    best: false  // for displaying attributes within
   }
 }
 
@@ -94,16 +100,24 @@ const store = new Vuex.Store({
         alert ("No more then 5 opportunities");
       }
     },
-    deleteOpportunity(state, indexToDelete) {
-      console.log('Delete opportunity with index: ' + indexToDelete);
-      state.opportunities.splice(indexToDelete, 1);
+    deleteOpportunity(state, index) {
+      console.log('Delete opportunity with index: ' + index);
+      state.opportunities.splice(index, 1);
           },
     updateOpportunityList(state, index, event) {
       state.opportunities[index].adjPay = event;
     },
+    updateOpportunity(state, update) {
+      console.log("Updating this opportunity")
+      state.opportunities[update.index].annual = update.data.annual;
+      state.opportunities[update.index].inputs = update.data.inputs;
+      state.opportunities[update.index].adjPay = update.data.adjustedPay;
+      state.opportunities[update.index].afterTaxPay = update.data.afterTaxPay;
+      state.opportunities[update.index].stateCostOfLiving = update.data.stateCostOfLiving;
+      console.log(state.opportunities[update.index])
+    }
   }
 });
-
 
 Vue.use(VueAnalytics, {
   // [Required] The name of your app as specified in Google Analytics.

@@ -7,19 +7,15 @@
                 </b-alert>
             </div>
             <div v-if="this.opp.calculateClicked">
-                <display-inputs :user-data="this.opp.userData"></display-inputs>
-                <calculate-tax
-                        :annual="this.opp.annual"
-                        :userData="this.opp.userData"></calculate-tax>
-                <calculate-c-o-l
-                        :state="this.opp.userData.state"
-                        :after-tax-income="this.afterTaxIncome"
-                        v-on:update-adj-pay="updateAdjPay">
-                </calculate-c-o-l>
+                <display-inputs :inputs="this.opp.inputs"></display-inputs>
+                <Taxes :annual="this.opp.annual" :net-income="this.opp.afterTaxPay"></Taxes>
+                <CostOfLiving :rent="this.opp.stateCostOfLiving.averageRent"
+                              :adjusted-income="this.opp.adjPay"
+                              :value-of-a-dollar="this.opp.stateCostOfLiving.valueOfADollar"></CostOfLiving>
             </div>
 
             <div v-else>
-                <input-form :user-data="this.opp.userData"></input-form>
+                <input-form :inputs="this.opp.inputs"></input-form>
                 <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
             </div>
 
@@ -34,48 +30,40 @@
     let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
 
     import InputForm from "@/components/bestJob/inputForm/InputForm";
-    import CalculateTax from "@/components/bestJob/calculateTax/Taxes";
-    import CalculateCOL from "@/components/bestJob/calculateCOL/CostOfLiving";
+    import Taxes from "@/components/bestJob/calculateTax/Taxes";
+    import CostOfLiving from "@/components/bestJob/calculateCOL/CostOfLiving";
     import DisplayInputs from "@/components/bestJob/inputForm/DisplayInputs";
     export default {
         name: 'OpportunityForm',
-        components: {DisplayInputs, CalculateCOL, CalculateTax, InputForm },
+        components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
         props: {
             index: Number,
             opp: Object
         },
-        computed: {
-            totalTax() {
-                return this.opp.annual.federal.amount +
-                        this.opp.annual.state.amount +
-                        this.opp.annual.fica.amount;
-            },
-            afterTaxIncome() {
-                return this.opp.userData.salary - this.totalTax;
-            }
-        },
          methods: {
             calculateTax() {
-                if (this.opp.userData.state == null) { alert("Enter State"); return null; }
-                if (this.opp.userData.salary == null) { alert("Enter Salary Data"); return null; }
+                if (this.opp.inputs.state == null) { alert("Enter State"); return null; }
+                if (this.opp.inputs.pay_rate == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
                 this.opp.calculateClicked = true;
                 axios({
                     method: 'post',
                     headers: {
                         'authorization': authorization,
-                       // 'content-type' : 'application/x-www-form-urlencoded',
                         'Access-Control-Allow-Origin':'*'
                     },
                     data: {
-                        state: this.opp.userData.state,
-                        pay_rate: this.opp.userData.salary,
-                        filing_status: this.opp.userData.filing_status
+                        state: this.opp.inputs.state,
+                        pay_rate: this.opp.inputs.pay_rate,
+                        filing_status: this.opp.inputs.filing_status
                     },
-                    url: "https://taxee.io/api/v2/calculate/2020",
+                    url: "https://greenpastures.herokuapp.com/calculate" // TODO make this a property depending on where it is deployed
                 }).then(response => {
-                    console.log(response.data.annual);
-                    this.opp.annual = response.data.annual;
+                    let update = {
+                        index: this.index,
+                        data: response.data
+                    }
+                    this.$store.commit('updateOpportunity', update)
                 })
                     .catch(e => console.log(e))
             },
@@ -85,14 +73,11 @@
             },
             reset() {
                 console.log("Reset clicked");
-                this.updateAdjPay(0);
-                this.opp.userData.salary = null;
-                this.opp.userData.state = "AL";
+                this.opp.adjPay = 0;
+                this.opp.inputs.pay_rate = null;
+                this.opp.inputs.state = "AL";
                 this.opp.calculateClicked = false;
             },
-            updateAdjPay(event) {
-                this.opp.adjPay = event;
-            }
         },
         mounted() {
             this.$ua.trackView("calculator");

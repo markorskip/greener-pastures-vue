@@ -12,7 +12,7 @@
             </b-tr>
             <b-tr>
                 <b-td>Value of a Dollar:</b-td>
-                <b-td>${{ displayValueOfDollar }}</b-td>
+                <b-td>{{ displayValueOfDollar }}</b-td>
             </b-tr>
             <b-tr variant="success">
                 <b-td><b>Adjusted Pay:</b></b-td>
@@ -26,32 +26,22 @@
 
     // https://www.patriotsoftware.com/blog/accounting/average-cost-living-by-state/
     import {thousandsSeparators} from "@/utilities/formattingUtilities";
-    import { calculatePayAfterCostOfLiving,
-        displayMedianRentByState,
-        findValueOfADollarByState
-    }from '@/components/bestJob/costOfLiving.js';
 
     export default {
         props: {
-            state: String,
-            afterTaxIncome: Number,
+            rent: Number,
+            valueOfADollar: Number,
+            adjustedIncome: Number
         },
         computed: {
-            calculateAdjustedPay(){
-                const adjPay = calculatePayAfterCostOfLiving(this.state, this.afterTaxIncome);
-                this.$emit('update-adj-pay',adjPay);
-                return adjPay;
-            },
             displayAdjustedIncome: function() {
-                const afterTax = this.calculateAdjustedPay;
-                if (isNaN(afterTax))  return null;
-                else return thousandsSeparators(afterTax);
+                return thousandsSeparators(this.adjustedIncome);
             },
             displayRent: function() {
-                return displayMedianRentByState(this.state);
+                return thousandsSeparators(this.rent);
             },
             displayValueOfDollar() {
-                return findValueOfADollarByState(this.state);
+                return thousandsSeparators(this.valueOfADollar);
             }
         }
     };

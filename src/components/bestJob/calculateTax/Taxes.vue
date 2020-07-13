@@ -53,34 +53,28 @@
     export default {
         props: {
             annual: Object,
-            userData: Object,
+            netIncome: Number,
         },
         data() {
             return {
-                salary: this.userData.salary,
                 showAll: false
             }
         },
         computed: {
-            totalTax() {
-                let totalTaxCalc = this.annual.fica.amount + this.annual.federal.amount + this.annual.state.amount;
-                this.$emit('update:totalTax',totalTaxCalc);
-                return totalTaxCalc;
-            },
             displayTotalTaxes() {
-              return thousandsSeparators(this.totalTax);
+              return thousandsSeparators(this.annual.totalTax);
             },
             fedTax() {
-                return thousandsSeparators(this.annual.federal.amount);
+                return thousandsSeparators(this.annual.federal);
             },
             stateTax() {
-                    return thousandsSeparators(this.annual.state.amount);
+                    return thousandsSeparators(this.annual.state);
             },
             ficaTax() {
-                return thousandsSeparators(this.annual.fica.amount);
+                return thousandsSeparators(this.annual.fica);
             },
             afterTaxPay() {
-                return thousandsSeparators((this.salary - this.totalTax));
+                return thousandsSeparators((this.netIncome));
             }
         },
         methods: {
