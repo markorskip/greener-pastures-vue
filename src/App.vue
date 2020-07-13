@@ -8,8 +8,8 @@
     </div>
     <b-container class="align-items-center">
       <router-view/>
+      <AdWrapper></AdWrapper>
     </b-container>
-    <Subscribe></Subscribe>
   </div>
 </template>
 
@@ -38,10 +38,10 @@
 
 
 <script>
-  import { subscribe as Subscribe} from "@/components/bestJob/subscribe/subscribe";
+  import AdWrapper from "@/components/adsense/AdWrapper";
 
   export default {
     name: 'App',
-    components: { Subscribe }
+    components: {AdWrapper}
   }
 </script>

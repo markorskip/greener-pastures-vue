@@ -9,7 +9,11 @@ import app from '../src/App.vue';
 import VueRouter from "vue-router";
 import Intro from "@/components/intro/Intro";
 
+
+import Ads from 'vue-google-adsense'
 Vue.use(require('vue-script2'))
+Vue.use(Ads.Adsense)
+
 // Install BootstrapVue
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
@@ -102,6 +106,7 @@ const store = new Vuex.Store({
     },
     deleteOpportunity(state, index) {
       console.log('Delete opportunity with index: ' + index);
+
       state.opportunities.splice(index, 1);
           },
     updateOpportunityList(state, index, event) {
