@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/">Intro</router-link> |
       <router-link to="/calculator">Calculate Best Job Opportunity</router-link>
+      <router-link v-show="false" to="/subscribe">Subscribe</router-link>
       <router-link v-show="false" to="/salaryToSelfEmployedCalculator">Calculate Real Compensation</router-link>
       <router-link v-show="false" to="/blog">| Blog</router-link>
     </div>

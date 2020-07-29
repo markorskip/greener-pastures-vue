@@ -32,7 +32,7 @@
               return src;
           },
             returnRandomPost(index) {
-                let title = 'Test';
+                let title = 'Blog Post';
                 return {
                     title: title,
                     description: 'Random description',

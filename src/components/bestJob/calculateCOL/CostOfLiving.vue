@@ -41,7 +41,7 @@
                 return thousandsSeparators(this.rent);
             },
             displayValueOfDollar() {
-                return thousandsSeparators(this.valueOfADollar);
+                return "$" + this.valueOfADollar;
             }
         }
     };
