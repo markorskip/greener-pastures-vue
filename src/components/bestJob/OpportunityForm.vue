@@ -45,7 +45,6 @@
                 if (this.opp.inputs.state == null) { alert("Enter State"); return null; }
                 if (this.opp.inputs.pay_rate == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
-                this.opp.calculateClicked = true;
                 axios({
                     method: 'post',
                     headers: {
@@ -64,6 +63,7 @@
                         data: response.data
                     }
                     this.$store.commit('updateOpportunity', update)
+                    this.opp.calculateClicked = true;
                 })
                     .catch(e => console.log(e))
             },
