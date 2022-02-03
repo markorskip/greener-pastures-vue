@@ -7,7 +7,7 @@ import VueAnalytics from 'vue-ua'
 
 import app from '../src/App.vue';
 import VueRouter from "vue-router";
-import Intro from "@/components/intro/Intro";
+import Intro from "@/components/archive/Intro";
 
 
 import Ads from 'vue-google-adsense'
@@ -28,16 +28,6 @@ const routes = [
     component: Intro
   },
   {
-    path: '/blog',
-    name: 'Blog',
-    component: Blog
-  },
-  {
-    path: '/subscribe',
-    name: 'Subscribe',
-    component: Subscribe
-  },
-  {
     path: '/calculator',
     name: 'Calculator',
     // route level code-splitting
@@ -49,11 +39,6 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
-  },
-  {
-    path: '/SalaryToSelfEmployedCalculator',
-    name: 'SalaryToSelfEmployedCalculator',
-    component: SalaryVsSelfEmployed
   }
 ];
 
@@ -64,10 +49,7 @@ const router = new VueRouter({
 });
 
 import Vuex from 'vuex'
-import About from "@/components/about/About";
-import SalaryVsSelfEmployed from "@/components/realCompensation/RealCompensationCalculator";
-import Blog from "@/components/blog/Blog";
-import Subscribe from "@/components/subscribe/Subscribe";
+import About from "@/components/archive/About";
 Vue.use(Vuex);
 
 
@@ -125,6 +107,7 @@ const store = new Vuex.Store({
       state.opportunities[update.index].adjPay = update.data.adjustedPay;
       state.opportunities[update.index].afterTaxPay = update.data.afterTaxPay;
       state.opportunities[update.index].stateCostOfLiving = update.data.stateCostOfLiving;
+      state.opportunities[update.index].adjPay = update.data.adjPay;
       console.log(state.opportunities[update.index])
     }
   }

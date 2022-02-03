@@ -7,7 +7,7 @@
                 </b-alert>
             </div>
             <div v-if="this.opp.calculateClicked">
-                <display-inputs :inputs="this.opp.inputs"></display-inputs>
+               <display-inputs :inputs="this.opp.inputs"></display-inputs>
                 <Taxes :annual="this.opp.annual" :net-income="this.opp.afterTaxPay"></Taxes>
                 <CostOfLiving :rent="this.opp.stateCostOfLiving.averageRent"
                               :adjusted-income="this.opp.adjPay"
@@ -26,8 +26,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
+    //import axios from 'axios';
+    //let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
 
     import InputForm from "@/components/bestJob/inputForm/InputForm";
     import Taxes from "@/components/bestJob/calculateTax/Taxes";
@@ -35,7 +35,8 @@
     import DisplayInputs from "@/components/bestJob/inputForm/DisplayInputs";
     export default {
         name: 'OpportunityForm',
-        components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
+        // components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
+      components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
         props: {
             index: Number,
             opp: Object
@@ -45,27 +46,56 @@
                 if (this.opp.inputs.state == null) { alert("Enter State"); return null; }
                 if (this.opp.inputs.pay_rate == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
-                axios({
-                    method: 'post',
-                    headers: {
-                        'authorization': authorization,
-                        'Access-Control-Allow-Origin':'*'
+
+                let mockResponse = {
+                  data: {
+                    adjPay: '120000',
+                    inputs: {
+                      state: this.opp.inputs.state,
+                      filing_status: this.opp.inputs.filing_status,
+                      pay_rate: this.opp.inputs.pay_rate
                     },
-                    data: {
-                        state: this.opp.inputs.state,
-                        pay_rate: this.opp.inputs.pay_rate,
-                        filing_status: this.opp.inputs.filing_status
+                    annual: {
+                      totalTax: 18000,
+                      federal: 10000,
+                      state: 5000,
+                      fica: 3000
                     },
-                    url: "https://greenpastures.herokuapp.com/calculate" // TODO make this a property depending on where it is deployed
-                }).then(response => {
-                    let update = {
-                        index: this.index,
-                        data: response.data
-                    }
-                    this.$store.commit('updateOpportunity', update)
-                    this.opp.calculateClicked = true;
-                })
-                    .catch(e => console.log(e))
+                    stateCostOfLiving: {
+                      averageRent: 1200,
+                      valueOfADollar: 1
+                    },
+                    afterTaxPay: 100000
+                  }
+                };
+                let update = {
+                  index: this.index,
+                  data: mockResponse.data
+                }
+                this.$store.commit('updateOpportunity', update)
+                this.opp.calculateClicked = true;
+
+                // axios({
+                //     method: 'post',
+                //     headers: {
+                //         'authorization': authorization,
+                //         'Access-Control-Allow-Origin':'*'
+                //     },
+                //     data: {
+                //         state: this.opp.inputs.state,
+                //         pay_rate: this.opp.inputs.pay_rate,
+                //         filing_status: this.opp.inputs.filing_status
+                //     },
+                //     url: "https://greenpastures.herokuapp.com/calculate" // TODO make this a property depending on where it is deployed
+                // }).then(response => {
+                //     let update = {
+                //         index: this.index,
+                //         data: response.data
+                //     }
+                //     this.$store.commit('updateOpportunity', update)
+                //     this.opp.calculateClicked = true;
+                // })
+                //     .catch(e => console.log(e))
             },
             deleteOpportunity() {
                 this.$store.commit('deleteOpportunity',this.index);
