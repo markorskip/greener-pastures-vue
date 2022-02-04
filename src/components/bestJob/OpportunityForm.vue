@@ -87,33 +87,10 @@
       'WY': {'dollar': '1.03', 'rent': '$1,149'},
       'DC': {'dollar': '0.84', 'rent': '$2339'}
     };
-    /*
-    public Annual calculateAnnualTaxesOwed(OpportunityInputs inputs) {
-        String uri = "https://taxee.io/api/v2/calculate/2020";
-        String auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0";
 
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        httpHeaders.setAccessControlAllowOrigin("*");
-        httpHeaders.set("Authorization", auth);
-
-        MultiValueMap<String, String> form_inputs = inputsToMultiValueMap(inputs);
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form_inputs, httpHeaders);
-
-        ResponseEntity<TaxeeResponse> response = restTemplate.exchange(
-                uri,
-                HttpMethod.POST,
-                request,
-                TaxeeResponse.class);
-        return response.getBody().getTaxesOwed();
-    }
-     */
-
+    //TODO calulcate directly
     //import y2020 from './service/2020/index.js';
 
-    // eslint-disable-next-line no-unused-vars
     async function calculateAnnualTaxes(state, filing_status, pay_rate) {
       let rsp = {};
       await axios({
@@ -133,11 +110,8 @@
         return rsp = response.data.annual;
         })
        .catch(e => console.log(e))
-
       return rsp;
     }
-
-
 
     function calculateValueOfDollar(state) {
       return costOfLivingMap[state].dollar;
@@ -164,16 +138,13 @@
                 alert("Enter Salary Data");
                 return null;
               }
-              console.log("Calculating Tax API request");
-
               let annual = await calculateAnnualTaxes(this.opp.inputs.state, this.opp.inputs.filing_status, this.opp.inputs.pay_rate);
-              console.log("Annual Taxes");
-              console.log(annual);
               let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
 
               function calculateTotalTax(annual) {
                 return annual.federal.amount + annual.state.amount + annual.fica.amount;
               }
+
               let totalTax = calculateTotalTax(annual);
               annual.totalTax = totalTax;
               let afterTaxPay = this.opp.inputs.pay_rate - totalTax;
