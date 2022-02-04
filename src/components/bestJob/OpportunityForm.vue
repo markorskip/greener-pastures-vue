@@ -33,6 +33,59 @@
     import Taxes from "@/components/bestJob/calculateTax/Taxes";
     import CostOfLiving from "@/components/bestJob/calculateCOL/CostOfLiving";
     import DisplayInputs from "@/components/bestJob/inputForm/DisplayInputs";
+
+    /*
+    public Annual calculateAnnualTaxesOwed(OpportunityInputs inputs) {
+        String uri = "https://taxee.io/api/v2/calculate/2020";
+        String auth = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        httpHeaders.setAccessControlAllowOrigin("*");
+        httpHeaders.set("Authorization", auth);
+
+        MultiValueMap<String, String> form_inputs = inputsToMultiValueMap(inputs);
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(form_inputs, httpHeaders);
+
+        ResponseEntity<TaxeeResponse> response = restTemplate.exchange(
+                uri,
+                HttpMethod.POST,
+                request,
+                TaxeeResponse.class);
+        return response.getBody().getTaxesOwed();
+    }
+     */
+    function calculateAnnualTaxes(state, filing_status, pay_rate) {
+      console.log(state);
+      console.log(filing_status);
+      console.log(pay_rate);
+      //TODO make an API call here to get taxes
+      // TODO update - the backend api taxee-stats are open source, import them to the
+      // project and remove all external api calls - yay!
+      // api address
+      return {
+          totalTax: 18000,
+          federal: 10000,
+          state: 5000,
+          fica: 3000
+      };
+    }
+
+    // TODO implement - can do in memory
+    function calculateValueOfDollar(state) {
+      console.log(state)
+      //TODO get values from json string
+      return 1.1;
+    }
+
+    // TODO implement - can do in memory
+    function calculateStateAverageRent(state) {
+      console.log(state)
+      return 1200;
+    }
+
     export default {
         name: 'OpportunityForm',
         // components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
@@ -47,30 +100,30 @@
                 if (this.opp.inputs.pay_rate == null) { alert("Enter Salary Data"); return null; }
                 console.log("Calculating Tax API request");
 
-                let mockResponse = {
+                let annualTaxes = calculateAnnualTaxes(this.opp.inputs.state, this.opp.inputs.filing_status, this.opp.inputs.pay_rate);
+                let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
+                let averageRent = calculateStateAverageRent(this.opp.inputs.state);
+                let afterTaxPay = this.opp.inputs.pay_rate - annualTaxes.totalTax;
+                let adjustedPay = afterTaxPay * valueOfADollar;
+                let response = {
                   data: {
-                    adjPay: '120000',
+                    adjPay: adjustedPay,
                     inputs: {
                       state: this.opp.inputs.state,
                       filing_status: this.opp.inputs.filing_status,
                       pay_rate: this.opp.inputs.pay_rate
                     },
-                    annual: {
-                      totalTax: 18000,
-                      federal: 10000,
-                      state: 5000,
-                      fica: 3000
-                    },
+                    annual: annualTaxes,
                     stateCostOfLiving: {
-                      averageRent: 1200,
-                      valueOfADollar: 1
+                      averageRent: averageRent,
+                      valueOfADollar: valueOfADollar
                     },
-                    afterTaxPay: 100000
+                    afterTaxPay: afterTaxPay
                   }
                 };
                 let update = {
                   index: this.index,
-                  data: mockResponse.data
+                  data: response.data
                 }
                 this.$store.commit('updateOpportunity', update)
                 this.opp.calculateClicked = true;
