@@ -65,13 +65,13 @@
               return thousandsSeparators(this.annual.totalTax);
             },
             fedTax() {
-                return thousandsSeparators(this.annual.federal);
+                return thousandsSeparators(this.annual.federal.amount);
             },
             stateTax() {
-                    return thousandsSeparators(this.annual.state);
+                    return thousandsSeparators(this.annual.state.amount);
             },
             ficaTax() {
-                return thousandsSeparators(this.annual.fica);
+                return thousandsSeparators(this.annual.fica.amount);
             },
             afterTaxPay() {
                 return thousandsSeparators((this.netIncome));

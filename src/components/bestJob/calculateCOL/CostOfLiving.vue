@@ -29,8 +29,8 @@
 
     export default {
         props: {
-            rent: Number,
-            valueOfADollar: Number,
+            rent: String,
+            valueOfADollar: String,
             adjustedIncome: Number
         },
         computed: {
@@ -38,7 +38,7 @@
                 return thousandsSeparators(this.adjustedIncome);
             },
             displayRent: function() {
-                return thousandsSeparators(this.rent);
+                return this.rent;
             },
             displayValueOfDollar() {
                 return "$" + this.valueOfADollar;

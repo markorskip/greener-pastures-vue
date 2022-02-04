@@ -26,14 +26,67 @@
 </template>
 
 <script>
-    //import axios from 'axios';
-    //let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
+    import axios from 'axios';
+    let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
 
     import InputForm from "@/components/bestJob/inputForm/InputForm";
     import Taxes from "@/components/bestJob/calculateTax/Taxes";
     import CostOfLiving from "@/components/bestJob/calculateCOL/CostOfLiving";
     import DisplayInputs from "@/components/bestJob/inputForm/DisplayInputs";
 
+    let costOfLivingMap = {
+      'AL': { 'dollar': '1.1',  'rent': '$998'},
+      'AK': { 'dollar': '0.9', 'rent': '$1,748'},
+      'AZ': { 'dollar': '1.0', 'rent': '$1,356'},
+      'AR': { 'dollar': '1.1', 'rent': '$953'},
+      'CA': { 'dollar': '0.8', 'rent': '$2,518'},
+      'CO': { 'dollar': '0.97', 'rent': '$1,927'},
+      'CT': { 'dollar': '0.92', 'rent': '$1,803'},
+      'DE': { 'dollar': '1.00', 'rent': '$1,435'},
+      'FL': { 'dollar': '1.00', 'rent': '$1,590'},
+      'GA': { 'dollar': '1.09', 'rent': '$1,262'},
+      'HI': { 'dollar': '0.84', 'rent': '$2,481'},
+      'ID': { 'dollar': '1.08', 'rent': '$1,238'},
+      'IL': { 'dollar': '1.01', 'rent': '$1,463'},
+      'IN': { 'dollar': '1.11', 'rent': '$1,113'},
+      'IA': { 'dollar': '1.11', 'rent': '$1,057'},
+      'KS': { 'dollar': '1.10', 'rent': '$1,051'},
+      'KY': { 'dollar': '1.14', 'rent': '$1,084'},
+      'LA': { 'dollar': '1.11', 'rent': '$1,245'},
+      'ME': { 'dollar': '1.02', 'rent': '$1,466'},
+      'MD': { 'dollar': '0.91', 'rent': '$1,807'},
+      'MA': { 'dollar': '0.93', 'rent': '$2,252'},
+      'MI': { 'dollar': '1.07', 'rent': '$1,110'},
+      'MN': { 'dollar': '1.03', 'rent': '$1,449'},
+      'MS': { 'dollar': '1.16', 'rent': '$1,055'},
+      'MO': { 'dollar': '1.12', 'rent': '$1,047'},
+      'MT': { 'dollar': '1.06', 'rent': '$1,234'},
+      'NE': { 'dollar': '1.10', 'rent': '$1,253'},
+      'NV': { 'dollar': '1.03', 'rent': '$1,423'},
+      'NH': { 'dollar': '0.94', 'rent': '$1,748'},
+      'NJ': { 'dollar': '0.88', 'rent': '$2,062'},
+      'NM': { 'dollar': '1.07', 'rent': '$1,200'},
+      'NY': { 'dollar': '0.87', 'rent': '$2,050'},
+      'NC': { 'dollar': '1.10', 'rent': '$1,208'},
+      'ND': { 'dollar': '1.09', 'rent': '$1,290'},
+      'OH': { 'dollar': '1.12', 'rent': '$1,113'},
+      'OK': { 'dollar': '1.12', 'rent': '$950'},
+      'OR': { 'dollar': '1.00', 'rent': '$1,707'},
+      'PA': { 'dollar': '1.02', 'rent': '$1,242'},
+      'RI': { 'dollar': '1.00', 'rent': '$1,725'},
+      'SC': { 'dollar': '1.11', 'rent': '$1,209'},
+      'SD': { 'dollar': '1.13', 'rent': '$1,213'},
+      'TN': { 'dollar': '1.11', 'rent': '$1,153'},
+      'TX': { 'dollar': '1.03', 'rent': '$1,455'},
+      'UT': { 'dollar': '1.03', 'rent': '$1,526'},
+      'VT': { 'dollar': '0.98', 'rent': '$1,599'},
+      'VA': { 'dollar': '0.98', 'rent': '$1,452'},
+      'WA': { 'dollar': '0.95', 'rent': '$1,838'},
+      'WV': { 'dollar': '1.14', 'rent': '$888'},
+      'WI': { 'dollar': '1.08', 'rent': '$1,141'},
+      'WY': {'dollar': '1.03', 'rent': '$1,149'},
+      'DC': {'dollar': '0.84', 'rent': '$2339'}
+    };
     /*
     public Annual calculateAnnualTaxesOwed(OpportunityInputs inputs) {
         String uri = "https://taxee.io/api/v2/calculate/2020";
@@ -57,98 +110,96 @@
         return response.getBody().getTaxesOwed();
     }
      */
-    function calculateAnnualTaxes(state, filing_status, pay_rate) {
-      console.log(state);
-      console.log(filing_status);
-      console.log(pay_rate);
-      //TODO make an API call here to get taxes
-      // TODO update - the backend api taxee-stats are open source, import them to the
-      // project and remove all external api calls - yay!
-      // api address
-      return {
-          totalTax: 18000,
-          federal: 10000,
-          state: 5000,
-          fica: 3000
-      };
+
+    //import y2020 from './service/2020/index.js';
+
+    // eslint-disable-next-line no-unused-vars
+    async function calculateAnnualTaxes(state, filing_status, pay_rate) {
+      let rsp = {};
+      await axios({
+        method: 'post',
+        headers: {
+          'authorization': authorization,
+          'Access-Control-Allow-Origin': '*',
+          'ContentType': 'MediaType.APPLICATION_FORM_URLENCODED'
+        },
+        data: {
+          state: state,
+          pay_rate: pay_rate,
+          filing_status: filing_status
+        },
+        url: "https://taxee.io/api/v2/calculate/2020"
+      }).then(response => {
+        return rsp = response.data.annual;
+        })
+       .catch(e => console.log(e))
+
+      return rsp;
     }
 
-    // TODO implement - can do in memory
+
+
     function calculateValueOfDollar(state) {
-      console.log(state)
-      //TODO get values from json string
-      return 1.1;
+      return costOfLivingMap[state].dollar;
     }
 
-    // TODO implement - can do in memory
     function calculateStateAverageRent(state) {
-      console.log(state)
-      return 1200;
+      return costOfLivingMap[state].rent;
     }
 
     export default {
-        name: 'OpportunityForm',
-        // components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
+      name: 'OpportunityForm',
       components: {DisplayInputs, InputForm, Taxes, CostOfLiving },
-        props: {
-            index: Number,
-            opp: Object
-        },
+      props: {
+          index: Number,
+          opp: Object
+      },
          methods: {
-            calculateTax() {
-                if (this.opp.inputs.state == null) { alert("Enter State"); return null; }
-                if (this.opp.inputs.pay_rate == null) { alert("Enter Salary Data"); return null; }
-                console.log("Calculating Tax API request");
+            async calculateTax() {
+              if (this.opp.inputs.state == null) {
+                alert("Enter State");
+                return null;
+              }
+              if (this.opp.inputs.pay_rate == null) {
+                alert("Enter Salary Data");
+                return null;
+              }
+              console.log("Calculating Tax API request");
 
-                let annualTaxes = calculateAnnualTaxes(this.opp.inputs.state, this.opp.inputs.filing_status, this.opp.inputs.pay_rate);
-                let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
-                let averageRent = calculateStateAverageRent(this.opp.inputs.state);
-                let afterTaxPay = this.opp.inputs.pay_rate - annualTaxes.totalTax;
-                let adjustedPay = afterTaxPay * valueOfADollar;
-                let response = {
-                  data: {
-                    adjPay: adjustedPay,
-                    inputs: {
-                      state: this.opp.inputs.state,
-                      filing_status: this.opp.inputs.filing_status,
-                      pay_rate: this.opp.inputs.pay_rate
-                    },
-                    annual: annualTaxes,
-                    stateCostOfLiving: {
-                      averageRent: averageRent,
-                      valueOfADollar: valueOfADollar
-                    },
-                    afterTaxPay: afterTaxPay
-                  }
-                };
-                let update = {
-                  index: this.index,
-                  data: response.data
+              let annual = await calculateAnnualTaxes(this.opp.inputs.state, this.opp.inputs.filing_status, this.opp.inputs.pay_rate);
+              console.log("Annual Taxes");
+              console.log(annual);
+              let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
+
+              function calculateTotalTax(annual) {
+                return annual.federal.amount + annual.state.amount + annual.fica.amount;
+              }
+              let totalTax = calculateTotalTax(annual);
+              annual.totalTax = totalTax;
+              let afterTaxPay = this.opp.inputs.pay_rate - totalTax;
+              let adjustedPay = afterTaxPay * valueOfADollar;
+              let response = {
+                data: {
+                  adjPay: adjustedPay,
+                  inputs: {
+                    state: this.opp.inputs.state,
+                    filing_status: this.opp.inputs.filing_status,
+                    pay_rate: this.opp.inputs.pay_rate
+                  },
+                  annual: annual,
+                  stateCostOfLiving: {
+                    averageRent: calculateStateAverageRent(this.opp.inputs.state),
+                    valueOfADollar: valueOfADollar
+                  },
+                  afterTaxPay: afterTaxPay
                 }
-                this.$store.commit('updateOpportunity', update)
-                this.opp.calculateClicked = true;
-
-                // axios({
-                //     method: 'post',
-                //     headers: {
-                //         'authorization': authorization,
-                //         'Access-Control-Allow-Origin':'*'
-                //     },
-                //     data: {
-                //         state: this.opp.inputs.state,
-                //         pay_rate: this.opp.inputs.pay_rate,
-                //         filing_status: this.opp.inputs.filing_status
-                //     },
-                //     url: "https://greenpastures.herokuapp.com/calculate" // TODO make this a property depending on where it is deployed
-                // }).then(response => {
-                //     let update = {
-                //         index: this.index,
-                //         data: response.data
-                //     }
-                //     this.$store.commit('updateOpportunity', update)
-                //     this.opp.calculateClicked = true;
-                // })
-                //     .catch(e => console.log(e))
+              };
+              let update = {
+                index: this.index,
+                data: response.data
+              }
+              this.$store.commit('updateOpportunity', update)
+              this.opp.calculateClicked = true;
             },
             deleteOpportunity() {
                 this.$store.commit('deleteOpportunity',this.index);

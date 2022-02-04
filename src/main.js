@@ -102,6 +102,7 @@ const store = new Vuex.Store({
     },
     updateOpportunity(state, update) {
       console.log("Updating this opportunity")
+      console.log(update.data.afterTaxPay);
       state.opportunities[update.index].annual = update.data.annual;
       state.opportunities[update.index].inputs = update.data.inputs;
       state.opportunities[update.index].adjPay = update.data.adjustedPay;
