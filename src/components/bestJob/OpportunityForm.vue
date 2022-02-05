@@ -7,16 +7,21 @@
                 </b-alert>
             </div>
             <div v-if="this.opp.calculateClicked">
-               <display-inputs :inputs="this.opp.inputs"></display-inputs>
+              <div v-if="this.opp.loading">
+                LOADING.....
+              </div>
+              <div v-else>
+                <display-inputs :inputs="this.opp.inputs"></display-inputs>
                 <Taxes :annual="this.opp.annual" :net-income="this.opp.afterTaxPay"></Taxes>
                 <CostOfLiving :rent="this.opp.stateCostOfLiving.averageRent"
                               :adjusted-income="this.opp.adjPay"
                               :value-of-a-dollar="this.opp.stateCostOfLiving.valueOfADollar"></CostOfLiving>
+              </div>
             </div>
 
             <div v-else>
                 <input-form :inputs="this.opp.inputs"></input-form>
-                <b-button block variant="primary" v-on:click="calculateTax" class="mb-2 mt-2">Calculate</b-button>
+                <b-button block variant="primary" v-on:click="calculateOpportunity" class="mb-2 mt-2">Calculate</b-button>
             </div>
 
             <b-button block variant="danger" v-on:click="deleteOpportunity">Delete</b-button>
@@ -33,6 +38,7 @@
     import Taxes from "@/components/bestJob/calculateTax/Taxes";
     import CostOfLiving from "@/components/bestJob/calculateCOL/CostOfLiving";
     import DisplayInputs from "@/components/bestJob/inputForm/DisplayInputs";
+
 
     let costOfLivingMap = {
       'AL': { 'dollar': '1.1',  'rent': '$998'},
@@ -91,27 +97,29 @@
     //TODO calulcate directly
     //import y2020 from './service/2020/index.js';
 
-    async function calculateAnnualTaxes(state, filing_status, pay_rate) {
-      let rsp = {};
-      await axios({
-        method: 'post',
-        headers: {
-          'authorization': authorization,
-          'Access-Control-Allow-Origin': '*',
-          'ContentType': 'MediaType.APPLICATION_FORM_URLENCODED'
-        },
-        data: {
-          state: state,
-          pay_rate: pay_rate,
-          filing_status: filing_status
-        },
-        url: "https://taxee.io/api/v2/calculate/2020"
-      }).then(response => {
-        return rsp = response.data.annual;
-        })
-       .catch(e => console.log(e))
-      return rsp;
-    }
+    // async function calculateAnnualTaxes(state, filing_status, pay_rate) {
+    //   let rsp = {};
+    //   this.opp.loading = true;
+    //   await axios({
+    //     method: 'post',
+    //     headers: {
+    //       'authorization': authorization,
+    //       'Access-Control-Allow-Origin': '*',
+    //       'ContentType': 'MediaType.APPLICATION_FORM_URLENCODED'
+    //     },
+    //     data: {
+    //       state: state,
+    //       pay_rate: pay_rate,
+    //       filing_status: filing_status
+    //     },
+    //     url: "https://taxee.io/api/v2/calculate/2020"
+    //   }).then(response => {
+    //     this.opp.loading = false;
+    //     return rsp = response.data.annual;
+    //     })
+    //    .catch(e => console.log(e))
+    //   return rsp;
+    // }
 
     function calculateValueOfDollar(state) {
       return costOfLivingMap[state].dollar;
@@ -128,61 +136,85 @@
           index: Number,
           opp: Object
       },
-         methods: {
-            async calculateTax() {
-              if (this.opp.inputs.state == null) {
-                alert("Enter State");
-                return null;
-              }
-              if (this.opp.inputs.pay_rate == null) {
-                alert("Enter Salary Data");
-                return null;
-              }
-              let annual = await calculateAnnualTaxes(this.opp.inputs.state, this.opp.inputs.filing_status, this.opp.inputs.pay_rate);
-              let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
+      methods: {
+        async calculateOpportunity() {
+          if (this.opp.inputs.state == null) {
+            alert("Enter State");
+            return null;
+          }
+          if (this.opp.inputs.pay_rate == null) {
+            alert("Enter Salary Data");
+            return null;
+          }
+          let annual = await this.calculateAnnualTaxes();
+          let valueOfADollar = calculateValueOfDollar(this.opp.inputs.state);
 
-              function calculateTotalTax(annual) {
-                return annual.federal.amount + annual.state.amount + annual.fica.amount;
-              }
+          function calculateTotalTax(annual) {
+            return annual.federal.amount + annual.state.amount + annual.fica.amount;
+          }
 
-              let totalTax = calculateTotalTax(annual);
-              annual.totalTax = totalTax;
-              let afterTaxPay = this.opp.inputs.pay_rate - totalTax;
-              let adjustedPay = afterTaxPay * valueOfADollar;
-              let response = {
-                data: {
-                  adjPay: adjustedPay,
-                  inputs: {
-                    state: this.opp.inputs.state,
-                    filing_status: this.opp.inputs.filing_status,
-                    pay_rate: this.opp.inputs.pay_rate
-                  },
-                  annual: annual,
-                  stateCostOfLiving: {
-                    averageRent: calculateStateAverageRent(this.opp.inputs.state),
-                    valueOfADollar: valueOfADollar
-                  },
-                  afterTaxPay: afterTaxPay
-                }
-              };
-              let update = {
-                index: this.index,
-                data: response.data
-              }
-              this.$store.commit('updateOpportunity', update)
-              this.opp.calculateClicked = true;
+          let totalTax = calculateTotalTax(annual);
+          annual.totalTax = totalTax;
+          let afterTaxPay = this.opp.inputs.pay_rate - totalTax;
+          let adjustedPay = afterTaxPay * valueOfADollar;
+          let response = {
+            data: {
+              adjPay: adjustedPay,
+              inputs: {
+                state: this.opp.inputs.state,
+                filing_status: this.opp.inputs.filing_status,
+                pay_rate: this.opp.inputs.pay_rate
+              },
+              annual: annual,
+              stateCostOfLiving: {
+                averageRent: calculateStateAverageRent(this.opp.inputs.state),
+                valueOfADollar: valueOfADollar
+              },
+              afterTaxPay: afterTaxPay
+            }
+          };
+          let update = {
+            index: this.index,
+            data: response.data
+          }
+          this.$store.commit('updateOpportunity', update)
+          this.opp.calculateClicked = true;
+      },
+      deleteOpportunity() {
+          this.$store.commit('deleteOpportunity',this.index);
+          console.log(this.$store.state.opportunities);
+      },
+      reset() {
+          console.log("Reset clicked");
+          this.opp.adjPay = 0;
+          this.opp.inputs.pay_rate = null;
+          this.opp.inputs.state = "AL";
+          this.opp.calculateClicked = false;
+      },
+        async calculateAnnualTaxes() {
+          let rsp = {};
+          this.opp.loading = true;
+          await axios({
+            method: 'post',
+            headers: {
+              'authorization': authorization,
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods':'POST',
+              'ContentType': '*'
             },
-            deleteOpportunity() {
-                this.$store.commit('deleteOpportunity',this.index);
-                console.log(this.$store.state.opportunities);
+            data: {
+              state: this.opp.inputs.state,
+              pay_rate: this.opp.inputs.pay_rate,
+              filing_status: this.opp.inputs.filing_status
             },
-            reset() {
-                console.log("Reset clicked");
-                this.opp.adjPay = 0;
-                this.opp.inputs.pay_rate = null;
-                this.opp.inputs.state = "AL";
-                this.opp.calculateClicked = false;
-            },
+            url: "https://taxee.io/api/v2/calculate/2020"
+          }).then(response => {
+            this.opp.loading = false;
+            return rsp = response.data.annual;
+          })
+              .catch(e => console.log(e))
+          return rsp;
         }
+      }
     }
 </script>

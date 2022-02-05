@@ -65,7 +65,8 @@ function newOpportunity() {
     },
     calculateClicked: false,
     adjPay: Number,
-    best: false  // for displaying attributes within
+    best: false,  // for displaying attributes within
+    loading: false
   }
 }
 
@@ -77,10 +78,10 @@ const store = new Vuex.Store({
   },
   mutations: {
     addOpportunity(state) {
-      if (state.opportunities.length < 5) {
+      if (state.opportunities.length < 3) {
         state.opportunities.push(newOpportunity())
       } else {
-        alert ("No more then 5 opportunities");
+        alert ("No more then 3 opportunities");
       }
     },
     deleteOpportunity(state, index) {
