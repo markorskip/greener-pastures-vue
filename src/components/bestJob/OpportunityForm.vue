@@ -183,11 +183,6 @@
                 this.opp.inputs.state = "AL";
                 this.opp.calculateClicked = false;
             },
-        },
-        mounted() {
-            this.$ua.trackView("calculator");
-            console.log("Opportunity Form Mounted");
         }
-
     }
 </script>
