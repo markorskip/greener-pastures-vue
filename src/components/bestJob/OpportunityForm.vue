@@ -27,8 +27,7 @@
 
 <script>
     import axios from 'axios';
-    let authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUElfS0VZX01BTkFHRVIiLCJodHRwOi8vdGF4ZWUuaW8vdXNlcl9pZCI6IjVlMGNiMzE1MGM1ZDE5MjkxMWQzNDg1MiIsImh0dHA6Ly90YXhlZS5pby9zY29wZXMiOlsiYXBpIl0sImlhdCI6MTU3Nzg5MDU4MX0.-gjctbfrZpR0Hw3C-CavZNEGAl2-890FJSG5TSml3i0'
-
+    let authorization = "API depreceated";
     import InputForm from "@/components/bestJob/inputForm/InputForm";
     import Taxes from "@/components/bestJob/calculateTax/Taxes";
     import CostOfLiving from "@/components/bestJob/calculateCOL/CostOfLiving";
